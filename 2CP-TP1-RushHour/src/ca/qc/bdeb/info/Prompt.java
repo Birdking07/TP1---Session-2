@@ -33,8 +33,8 @@ public class Prompt {
      */
     public Command readUserCommand(Challenge challenge) {
 
+       Command PromptCommand = new Command();
 
-
-        return ;
+        return PromptCommand;
     }
 }
