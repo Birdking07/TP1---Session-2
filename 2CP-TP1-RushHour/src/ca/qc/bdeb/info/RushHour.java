@@ -61,7 +61,8 @@ public class RushHour {
             challenge.print();
             Command command = prompt.readUserCommand(challenge);
 
-            if (command.isQuit())
+            boolean Quit = false;
+            if (command.isQuit(Quit))
                 break;
 
             MoveResult result = challenge.moveVehicle(command);
@@ -99,14 +100,8 @@ public class RushHour {
      * @return le défi chargé, null s'il y a une erreur au chargement
      */
     private static Challenge loadNextChallenge() {
-        switch (Settings.Current_Challenge){
-            case 1 :
+        Cell Parking_lot = new Cell();
 
-            case 2:
-
-            case 3:
-
-        }
         // INSÉREZ VOTRE CODE ICI
 
 

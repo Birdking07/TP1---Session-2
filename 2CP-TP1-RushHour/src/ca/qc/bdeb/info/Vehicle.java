@@ -56,7 +56,13 @@ public class Vehicle {
 
     // setters et getters
 
-    public RushHour.Orientation getOrientation() { return orientation; }
-    public Coordinate getPosition() { return position; }
-    public char getSymbol() { return symbol; }
+    public RushHour.Orientation getOrientation() {
+        return orientation;
+    }
+    public Coordinate getPosition() {
+        return position;
+    }
+    public char getSymbol() {
+        return symbol;
+    }
 }

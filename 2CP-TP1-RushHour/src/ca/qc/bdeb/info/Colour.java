@@ -40,8 +40,12 @@ public enum Colour {
 
     private final String code;
 
-    Colour(String code) { this.code = code; }
+    Colour(String code) {
+        this.code = code;
+    }
 
     @Override
-    public String toString() { return code; }
+    public String toString() {
+        return code;
+    }
 }

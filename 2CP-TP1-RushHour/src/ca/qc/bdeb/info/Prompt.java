@@ -14,6 +14,8 @@ public class Prompt {
 
     final private Scanner scanner = new Scanner(System.in);
 
+    public static String user;
+
     /**
      * Affiche le prompt.
      */
@@ -31,10 +33,8 @@ public class Prompt {
      */
     public Command readUserCommand(Challenge challenge) {
 
-        String user = scanner.nextLine();
 
-        Command user_input = scanner.nextCommand();
 
-        return user_input;
+        return ;
     }
 }
