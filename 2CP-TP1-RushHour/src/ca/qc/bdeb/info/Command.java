@@ -9,8 +9,9 @@ import java.util.Scanner;
 public class Command {
 
     public static String[][] DataTable;
-    private static int FileSize;
-    public static char[] choises;
+    public static int FileSize;
+    private static char[] choises;
+    public  static ArrayList<String> VehicleColour;
 
     public Command(){
         if (!(Prompt.user.equalsIgnoreCase("q"))){
@@ -61,10 +62,11 @@ public class Command {
              FileSize = Filetext.size();
              DataTable = new String[Filetext.size()][9];
 
-            for (int i = 0 ; i < Filetext.size() ; i++){
+            for (int i = 0 ; i < FileSize; i++){
                 for(int a = 0 ; a < 9 ; a++){
                      String[] SplitColums = Filetext.get(i).split("\n");
                      DataTable[i][a] += SplitColums[a].split("|");
+                     VehicleColour.add(DataTable[i][0]);
                 }
             }
         } catch (FileNotFoundException e){

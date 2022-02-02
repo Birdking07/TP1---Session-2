@@ -1,5 +1,9 @@
 package ca.qc.bdeb.info;
 
+import java.awt.*;
+
+import java.util.ArrayList; //ajout
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,6 +32,9 @@ class Settings {
 
     // "dictionnaire" associatif des symboles et couleurs (codes d'échappement)
     private final Map<Character, Colour> colourMap = new HashMap<>();
+
+    private int FileSize;
+    private ArrayList<String> VehicleColour;
 
 
     /**
@@ -69,7 +76,32 @@ class Settings {
      */
     public Colour getColour(Character symbol) {
 
+
+        String CurrentColour;
+
+            switch(VehicleColour.get(i))
+            {
+                case "A" -> {return Colour.ARMY;}
+                case "B" -> {return Colour.BABY;}
+              case "C" -> {return Colour.CREAM;}
+              case "E" -> {return Colour.ELECTRIC;}
+              case "G" -> {return Colour.GREEN;}
+              case "I" -> {return Colour.IRON;}
+              case "L" -> {return Colour.LILAC;}
+              case "M" -> {return Colour.MINT;}
+              case "O" -> {return Colour.ORANGE;}
+              case "P" -> {return Colour.PINK;}
+              case "R" -> {return Colour.RED;}
+              case "S" -> {return Colour.SADDLE;}
+              case "T" -> {return Colour.TURQUOISE;}
+              case "V" -> {return Colour.VIOLET;}
+              case "W" -> {return Colour.WHEAT;}
+              case "Y" -> {return Colour.YELLOW;}
+
+            }
+
         // INSÉREZ VOTRE CODE ICI
+
     }
 
     /**
