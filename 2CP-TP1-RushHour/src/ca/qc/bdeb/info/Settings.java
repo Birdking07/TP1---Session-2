@@ -77,9 +77,12 @@ class Settings {
     public Colour getColour(Character symbol) {
 
 
+        /*
+
         String CurrentColour;
 
-            switch(VehicleColour.get(i))
+
+            switch()
             {
                 case "A" -> {return Colour.ARMY;}
                 case "B" -> {return Colour.BABY;}
@@ -99,6 +102,13 @@ class Settings {
               case "Y" -> {return Colour.YELLOW;}
 
             }
+
+         */
+
+        for (int i = 0 ; i < Colour.values().length ; i++){
+            if (symbol == Colour.values()[i].name().charAt(3));
+            return Colour.values()[i];
+        }
 
         // INSÉREZ VOTRE CODE ICI
 
