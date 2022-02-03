@@ -100,7 +100,8 @@ public class RushHour {
      * @return le défi chargé, null s'il y a une erreur au chargement
      */
     private static Challenge loadNextChallenge() {
-        Cell Parking_lot = new Cell();
+
+
 
         // INSÉREZ VOTRE CODE ICI
 

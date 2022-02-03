@@ -1,6 +1,8 @@
 package ca.qc.bdeb.info;
 
 
+import java.util.ArrayList;
+
 /**
  * Un véhicule.
  *
@@ -40,6 +42,14 @@ public class Vehicle {
      */
     public ArrayList<Coordinate> getCoordinates() {
 
+        ArrayList<Coordinate> CurrentCarCoordinates = new ArrayList<>();
+
+       for (int i = 0 ; i < Challenge.FileSize ; i++){
+           Coordinate Position = new Coordinate();
+           CurrentCarCoordinates.add(Position);
+       }
+
+       return CurrentCarCoordinates;
         // INSÉREZ VOTRE CODE ICI
     }
 

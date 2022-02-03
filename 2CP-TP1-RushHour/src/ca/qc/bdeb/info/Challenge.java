@@ -1,6 +1,9 @@
 package ca.qc.bdeb.info;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 
 /**
@@ -19,6 +22,13 @@ public class Challenge {
 
     private int number;  // numéro du défi
 
+    static ArrayList<String> VehicleColour;
+    static ArrayList<String> VehicleSize;
+    static ArrayList<String> VehicleCoordinates;
+    static ArrayList<String> VehicleOrientation;
+    static  String[][] DataTable;
+    static  int FileSize;
+
     /**
      * Construit un objet représentant un défi.
      * Ce constructeur est privé. Il est appelé par la méthode statique publique loadChallenge().
@@ -34,7 +44,31 @@ public class Challenge {
      * Construit la grille de stationnement.
      */
     private void buildParking() {
+        try {
+            File currentGame = new File(Settings.Current_Challenge +".txt");
+            Scanner ReadFile = new Scanner(currentGame);
 
+            ArrayList<String> Filetext = new ArrayList<String>();
+            while (ReadFile.hasNextLine()){
+                Filetext.add(ReadFile.nextLine());
+            }
+            FileSize = Filetext.size();
+            DataTable = new String[Filetext.size()][9];
+
+
+            for (int i = 0 ; i < FileSize; i++){
+                for(int a = 0 ; a < 9 ; a++){
+                    String[] SplitColums = Filetext.get(i).split("\n");
+                    DataTable[i][a] += SplitColums[a].split("|");
+                    VehicleColour.add(DataTable[i][0]);
+                    VehicleSize.add(DataTable[i][1]);
+                    VehicleCoordinates.add(DataTable[i][2]);
+                    VehicleOrientation.add(DataTable[i][3]);
+                }
+            }
+        } catch (FileNotFoundException e){
+            System.out.println("Erreur de lecture de fichier");
+        }
         // INSÉREZ VOTRE CODE ICI
     }
 
@@ -45,6 +79,10 @@ public class Challenge {
      * @return le véhicule correspondant, null si le véhicule n'est pas trouvé
      */
     public Vehicle getVehicle(Character symbol) {
+
+        Vehicle CurrentVehicle = new Vehicle(VehicleSize , Coordinate.MergedCoordinates ,  )
+
+                //length , Coordinate class position , and Orientation class orientation
 
         // INSÉREZ VOTRE CODE ICI
     }

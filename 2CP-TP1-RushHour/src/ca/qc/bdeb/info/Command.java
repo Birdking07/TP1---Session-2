@@ -8,10 +8,8 @@ import java.util.Scanner;
 
 public class Command {
 
-    public static String[][] DataTable;
-    public static int FileSize;
-    private static char[] choises;
-    public  static ArrayList<String> VehicleColour;
+
+    private char[] choises;
 
     public Command(){
         if (!(Prompt.user.equalsIgnoreCase("q"))){
@@ -22,8 +20,8 @@ public class Command {
 
                    boolean valid = false;
 
-                   for (int i = 0 ; i < FileSize ; i++){
-                       char c = DataTable[i][0].charAt(0);
+                   for (int i = 0 ; i < Challenge.FileSize ; i++){
+                       char c = Challenge.DataTable[i][0].charAt(0);
                        if(c == choises[0]){
                            valid = true;
                        }
@@ -34,7 +32,7 @@ public class Command {
                        }
                    }
 
-                   if (valid == false){
+                   if (!valid){
                        choises = null;
                    }
 
@@ -51,28 +49,8 @@ public class Command {
     }
 
     private static void FileData(){
-        try {
-            File currentGame = new File(Settings.Current_Challenge +".txt");
-            Scanner ReadFile = new Scanner(currentGame);
 
-            ArrayList<String> Filetext = new ArrayList<String>();
-            while (ReadFile.hasNextLine()){
-                Filetext.add(ReadFile.nextLine());
-            }
-             FileSize = Filetext.size();
-             DataTable = new String[Filetext.size()][9];
-
-            for (int i = 0 ; i < FileSize; i++){
-                for(int a = 0 ; a < 9 ; a++){
-                     String[] SplitColums = Filetext.get(i).split("\n");
-                     DataTable[i][a] += SplitColums[a].split("|");
-                     VehicleColour.add(DataTable[i][0]);
-                }
-            }
-        } catch (FileNotFoundException e){
-            System.out.println("Erreur de lecture de fichier");
-        }
-
+      // if in doubt code goes here
     }
 
     public boolean isQuit(boolean Quit) {
