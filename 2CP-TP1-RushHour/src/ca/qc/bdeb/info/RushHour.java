@@ -101,11 +101,9 @@ public class RushHour {
      */
     private static Challenge loadNextChallenge() {
 
-
+    return Challenge.loadChallenge(Settings.Current_Challenge);
 
         // INSÉREZ VOTRE CODE ICI
-
-
     }
 
     /**

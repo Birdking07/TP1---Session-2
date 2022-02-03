@@ -104,14 +104,14 @@ class Settings {
             }
 
          */
-
+        int CorrectPosition = 0;
         for (int i = 0 ; i < Colour.values().length ; i++){
-            if (symbol == Colour.values()[i].name().charAt(3));
-            return Colour.values()[i];
+            if (symbol == Colour.values()[i + 3].name().charAt(0));
+            CorrectPosition = i;
         }
 
         // INSÉREZ VOTRE CODE ICI
-
+         return Colour.values()[CorrectPosition];
     }
 
     /**
@@ -120,6 +120,17 @@ class Settings {
      * @return true si le symbole est valide, false sinon
      */
     public boolean isValidSymbol(Character symbol) {
+        int AttemptCounter = 0;
+
+        for(int i = 0 ; i < Colour.values().length ; i++){
+            if(symbol != Colour.values()[i + 3].name().charAt(0));
+            AttemptCounter++;
+        }
+        if(AttemptCounter == Colour.values().length){
+            return false;
+        } else {
+            return true;
+        }
 
         // INSÉREZ VOTRE CODE ICI
     }
