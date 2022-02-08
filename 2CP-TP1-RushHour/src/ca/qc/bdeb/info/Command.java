@@ -16,8 +16,6 @@ public class Command {
            choises = Prompt.user.toCharArray();
            if (choises.length == 2){
 
-                   FileData();
-
                    boolean valid = false;
 
                    for (int i = 0 ; i < Challenge.FileSize ; i++){
@@ -46,11 +44,9 @@ public class Command {
         } else {
             System.out.println("Fermetture du jeu");
         }
-    }
 
-    private static void FileData(){
 
-      // if in doubt code goes here
+
     }
 
     public boolean isQuit(boolean Quit) {

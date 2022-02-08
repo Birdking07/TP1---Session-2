@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.concurrent.ExecutionException;
 
 
 /**
@@ -28,6 +29,7 @@ public class Challenge {
     static ArrayList<String> VehicleOrientation;
     static  String[][] DataTable;
     static  int FileSize;
+    static int PlayerPosition;
     private ArrayList<String> Filetext;
 
     /**
@@ -51,6 +53,10 @@ public class Challenge {
                     String[] SplitColums = Filetext.get(i).split("\n");
                     DataTable[i][a] += SplitColums[a].split("|");
                     VehicleColour.add(DataTable[i][0]);
+
+                    if(VehicleColour.get(i).equalsIgnoreCase("R"));
+                    PlayerPosition = i;
+
                     VehicleSize.add(DataTable[i][1]);
                     VehicleCoordinates.add(DataTable[i][2]);
                     VehicleOrientation.add(DataTable[i][3]);
@@ -68,14 +74,17 @@ public class Challenge {
      */
     public Vehicle getVehicle(Character symbol) {
 
+       try{
+               int VehicleSizeNumber = Integer.parseInt(VehicleSize.get(0));
+               Orientation CarOrientation = Coordinate.CarOrientation.get(0);
+               Coordinate LoadCoordiate = new Coordinate();
+               Vehicle CurrentVehicle = new Vehicle(symbol , VehicleSizeNumber ,LoadCoordiate , CarOrientation );
 
-            int VehicleSizeNumber = Integer.parseInt(VehicleSize.get(0));
-            RushHour.Orientation CarOrientation = new RushHour.Orientation();
-            Coordinate LoadCoordiate = new Coordinate();
-            Vehicle CurrentVehicle = new Vehicle(symbol , VehicleSizeNumber,LoadCoordiate , CarOrientation );
+           return CurrentVehicle;
+       } catch (Exception e) {
+           return null;
+        }
 
-
-        return CurrentVehicle;
                 //length , Coordinate position , and Orientation orientation
 
         // INSÉREZ VOTRE CODE ICI
@@ -88,11 +97,7 @@ public class Challenge {
      */
     public boolean isSolved(){
 
-        if(){
-            return true;
-        }
-
-        return false;
+            return false;
         // INSÉREZ VOTRE CODE ICI
     }
 
@@ -104,7 +109,9 @@ public class Challenge {
     private boolean load() {
 
         try {
-            File currentGame = new File(Settings.Current_Challenge + ".txt");
+            String CurrentFile = Integer.toString(Settings.Current_Challenge);
+            CurrentFile += ".txt";
+            File currentGame = new File(CurrentFile);
             Scanner ReadFile = new Scanner(currentGame);
 
             Filetext = new ArrayList<String>();
@@ -113,6 +120,7 @@ public class Challenge {
             }
             FileSize = Filetext.size();
             DataTable = new String[Filetext.size()][9];
+            ReadFile.close();
             return true;
         }  catch (FileNotFoundException e){
         System.out.println("Erreur de lecture de fichier");
@@ -143,7 +151,7 @@ public class Challenge {
      * @param command commande de déplacement (#N, #S, #E, #W)
      * @return le résultat de la tentative de déplacement (ce résultat peut être un déplacement)
      */
-    public RushHour.MoveResult moveVehicle(Command command) {
+    public MoveResult moveVehicle(Command command) {
 
 
     return null;
@@ -154,6 +162,10 @@ public class Challenge {
      * Affiche le défi (titre et stationnement).
      */
     public void print() {
+
+        System.out.println("R U S H H @ U R");
+        Cell Parking_lot = new Cell();
+        System.out.println(Parking_lot);
 
         // INSÉREZ VOTRE CODE ICI
     }

@@ -16,7 +16,7 @@ public class Vehicle {
     private int length;  // longueur du véhicule (2 ou 3)
 
     private Coordinate position;  // emplacement du véhicule dans le stationnement
-    private RushHour.Orientation orientation;  // disposition du véhicule (horizontale ou verticale)
+    private Orientation orientation;  // disposition du véhicule (horizontale ou verticale)
 
     /**
      * Constructeur.
@@ -26,7 +26,7 @@ public class Vehicle {
      * @param position emplacement du véhicule dans le stationnement (ex.: 1,2)
      * @param orientation orientation du véhicule (ex.: horizontale)
      */
-    public Vehicle(Character symbol, int length, Coordinate position, RushHour.Orientation orientation) {
+    public Vehicle(Character symbol, int length, Coordinate position, Orientation orientation) {
 
         this.symbol = symbol;
         this.length = length;
@@ -66,7 +66,7 @@ public class Vehicle {
 
     // setters et getters
 
-    public RushHour.Orientation getOrientation() {
+    public Orientation getOrientation() {
         return orientation;
     }
     public Coordinate getPosition() {

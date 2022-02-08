@@ -8,7 +8,7 @@ public class Coordinate {
     static ArrayList<String> HorizontalCoordinates;
     static ArrayList<String> VerticalCoordinates;
     static ArrayList<String> MergedCoordinates;
-    static ArrayList<RushHour.Orientation.orientation> CarOrientation;
+    static ArrayList<Orientation> CarOrientation;
 
     private void ReadingCarCoordinates(){
 
@@ -26,9 +26,9 @@ public class Coordinate {
     private static void ReadingCarOrientation(){
         for(int i = 0 ; i < Challenge.FileSize ; i++){
             if(Challenge.VehicleOrientation.get(i).equalsIgnoreCase("h")){
-                CarOrientation.add(RushHour.Orientation.orientation.Horizontal);
+                CarOrientation.add(Orientation.Horizontal);
             } else {
-                CarOrientation.add(RushHour.Orientation.orientation.Vertical);
+                CarOrientation.add(Orientation.Vertical);
             }
 
         }
