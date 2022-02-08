@@ -1,25 +1,27 @@
 package ca.qc.bdeb.info;
 
-import java.io.File;
 
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Command {
 
 
     private char[] choises;
+    private String user;
 
     public Command(){
-        if (!(Prompt.user.equalsIgnoreCase("q"))){
-           choises = Prompt.user.toCharArray();
+
+        Scanner scanner = new Scanner(System.in);
+        user = scanner.nextLine();
+
+        if (!(user.equalsIgnoreCase("q"))){
+           choises = user.toCharArray();
            if (choises.length == 2){
 
                    boolean valid = false;
 
                    for (int i = 0 ; i < Challenge.FileSize ; i++){
-                       char c = Challenge.DataTable[i][0].charAt(0);
+                       char c = Challenge.VehicleColour.get(i).charAt(0);
                        if(c == choises[0]){
                            valid = true;
                        }
@@ -51,7 +53,7 @@ public class Command {
 
     public boolean isQuit(boolean Quit) {
 
-        if (Prompt.user.equalsIgnoreCase("q")) {
+        if (user.equalsIgnoreCase("q")) {
             Quit = true;
         }
         return Quit;

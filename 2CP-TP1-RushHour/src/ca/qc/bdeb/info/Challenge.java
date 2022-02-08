@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.concurrent.ExecutionException;
 
 
 /**
@@ -163,9 +162,10 @@ public class Challenge {
      */
     public void print() {
 
-        System.out.println("R U S H H @ U R");
+        System.out.println(" R U S H H @ U R");
         Cell Parking_lot = new Cell();
-        System.out.println(Parking_lot);
+
+
 
         // INSÉREZ VOTRE CODE ICI
     }

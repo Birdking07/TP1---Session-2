@@ -14,8 +14,6 @@ public class Prompt {
 
     final private Scanner scanner = new Scanner(System.in);
 
-    public static String user;
-
     /**
      * Affiche le prompt.
      */
