@@ -60,7 +60,11 @@ public class Vehicle {
      * @param deltaY déplacement sur l'axe vertical
      */
     public void move(int deltaX, int deltaY) {
+       if(this.orientation == Orientation.Horizontal ){
 
+       } else {
+
+       }
         // INSÉREZ VOTRE CODE ICI
     }
 

@@ -9,7 +9,7 @@ public class Command {
     private char[] choises;
     private String user;
 
-    public Command(){
+    public Command(String UserCommand){
 
         Scanner scanner = new Scanner(System.in);
         user = scanner.nextLine();
@@ -26,11 +26,12 @@ public class Command {
                            valid = true;
                        }
                    }
-                   for(int i = 0; i < 4 ;i++){
                       if (!(choises[1] == 'N' || choises[1] == 'S' || choises[1] == 'E' || choises[1] == 'W' )){
                           valid = false;
                        }
-                   }
+                      switch (choises[0]) {
+
+                      }
 
                    if (!valid){
                        choises = null;

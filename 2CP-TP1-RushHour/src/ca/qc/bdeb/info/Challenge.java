@@ -162,8 +162,7 @@ public class Challenge {
      * @return le résultat de la tentative de déplacement (ce résultat peut être un déplacement)
      */
     public MoveResult moveVehicle(Command command) {
-
-
+        
     return null;
         // INSÉREZ VOTRE CODE ICI
     }
@@ -173,7 +172,7 @@ public class Challenge {
      */
     public void print() {
 
-        System.out.println(" R U S H H @ U R");
+        System.out.println(Colour.RED +" R U S H" + Colour.YELLOW + " H @ U R" + Colour.IRON);
         Cell Parking_lot = new Cell();
 
 

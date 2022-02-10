@@ -14,12 +14,14 @@ public class Prompt {
 
     final private Scanner scanner = new Scanner(System.in);
 
+    static String UserCommand;
+
     /**
      * Affiche le prompt.
      */
     private void print() {
 
-        System.out.print(Settings.INDENTATION + Colour.PROMPT + "Commande (#N, #S, #E, #W ou Q): ");
+        System.out.print(" " + Colour.PROMPT + "Commande (#N, #S, #E, #W ou Q): ");
     }
 
     /**
@@ -30,8 +32,9 @@ public class Prompt {
      * @return la commande saisie
      */
     public Command readUserCommand(Challenge challenge) {
-
-       Command PromptCommand = new Command();
+        System.out.println("");
+        print();
+       Command PromptCommand = new Command(UserCommand);
 
         return PromptCommand;
     }
