@@ -22,14 +22,14 @@ public class Challenge {
 
     private int number;  // numéro du défi
 
-    static ArrayList<String> VehicleColour;
-    static ArrayList<String> VehicleSize;
-    static ArrayList<String> VehicleCoordinates;
-    static ArrayList<String> VehicleOrientation;
+    static ArrayList<String> VehicleColour = new ArrayList<>();
+    static ArrayList<String> VehicleSize = new ArrayList<>();
+    static ArrayList<String> VehicleCoordinates = new ArrayList<>();
+    static ArrayList<String> VehicleOrientation = new ArrayList<>();
     static  String[][] DataTable;
     static  int FileSize;
     static int PlayerPosition;
-    private ArrayList<String> Filetext;
+    private ArrayList<String> Filetext = new ArrayList<>();
 
     /**
      * Construit un objet représentant un défi.
@@ -51,7 +51,8 @@ public class Challenge {
                 for(int a = 0 ; a < 9 ; a++){
                     String[] SplitColums = Filetext.get(i).split("\n");
                     DataTable[i][a] += SplitColums[a].split("|");
-                    VehicleColour.add(DataTable[i][0]);
+                    VehicleColour.add("");
+                    VehicleColour.set(i ,DataTable[i][0] );
 
                     if(VehicleColour.get(i).equalsIgnoreCase("R"));
                     PlayerPosition = i;
@@ -120,6 +121,7 @@ public class Challenge {
             FileSize = Filetext.size();
             DataTable = new String[Filetext.size()][9];
             ReadFile.close();
+            buildParking();
             return true;
         }  catch (FileNotFoundException e){
         System.out.println("Erreur de lecture de fichier");
@@ -139,9 +141,10 @@ public class Challenge {
         Challenge challenge = new Challenge(number);
         if (challenge.load()) {
             return challenge;
+        } else {
+            return null;
         }
 
-        return null;
     }
 
     /**
