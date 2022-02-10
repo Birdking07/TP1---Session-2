@@ -27,7 +27,7 @@ public class Challenge {
     static ArrayList<String> VehicleCoordinates = new ArrayList<>();
     static ArrayList<String> VehicleOrientation = new ArrayList<>();
     static  String[][] DataTable;
-    static  int FileSize;
+    static int FileSize;
     static int PlayerPosition;
     private ArrayList<String> Filetext = new ArrayList<>();
 
@@ -47,12 +47,16 @@ public class Challenge {
      */
     private void buildParking() {
 
-            for (int i = 0 ; i < FileSize; i++){
-                for(int a = 0 ; a < 9 ; a++){
-                    String[] SplitColums = Filetext.get(i).split("\n");
-                    DataTable[i][a] += SplitColums[a].split("|");
-                    VehicleColour.add("");
-                    VehicleColour.set(i ,DataTable[i][0] );
+
+        DataTable = new String[FileSize][4];
+
+        for (int i = 0 ; i < FileSize; i++){
+            String[] SplitValues = Filetext.get(i).split("\\|");
+                for(int a = 0 ; a < 4 ; a++){
+                    DataTable[i][a] = SplitValues[a];
+                }
+
+                    VehicleColour.add(DataTable[i][0]);
 
                     if(VehicleColour.get(i).equalsIgnoreCase("R"));
                     PlayerPosition = i;
@@ -60,8 +64,13 @@ public class Challenge {
                     VehicleSize.add(DataTable[i][1]);
                     VehicleCoordinates.add(DataTable[i][2]);
                     VehicleOrientation.add(DataTable[i][3]);
+
+
                 }
-            }
+
+
+
+
 
         // INSÉREZ VOTRE CODE ICI
     }
@@ -119,9 +128,8 @@ public class Challenge {
                 Filetext.add(ReadFile.nextLine());
             }
             FileSize = Filetext.size();
-            DataTable = new String[Filetext.size()][9];
-            ReadFile.close();
             buildParking();
+            ReadFile.close();
             return true;
         }  catch (FileNotFoundException e){
         System.out.println("Erreur de lecture de fichier");
