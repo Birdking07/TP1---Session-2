@@ -5,15 +5,23 @@ import java.util.ArrayList;
 
 public class Coordinate {
 
-    static ArrayList<String> HorizontalCoordinates;
-    static ArrayList<String> VerticalCoordinates;
-    static ArrayList<String> MergedCoordinates;
-    static ArrayList<Orientation> CarOrientation;
+    static ArrayList<String> HorizontalCoordinates = new ArrayList<>();
+    static ArrayList<String> VerticalCoordinates = new ArrayList<>();
+    static ArrayList<String> MergedCoordinates = new ArrayList<>();
+    static ArrayList<Orientation> CarOrientation = new ArrayList<>();
+
+    public Coordinate(){
+        ReadingCarCoordinates();
+        ReadingCarOrientation();
+
+
+    }
 
     private void ReadingCarCoordinates(){
 
         for(int i = 0 ; i < Challenge.FileSize ; i++){
             String[] CurrentCoordinates = Challenge.VehicleCoordinates.get(i).split(",");
+
             HorizontalCoordinates.add(CurrentCoordinates[0]);
             VerticalCoordinates.add(CurrentCoordinates[1]);
 

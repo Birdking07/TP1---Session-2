@@ -62,7 +62,9 @@ public class Challenge {
                     PlayerPosition = i;
 
                     VehicleSize.add(DataTable[i][1]);
+
                     VehicleCoordinates.add(DataTable[i][2]);
+
                     VehicleOrientation.add(DataTable[i][3]);
 
 
@@ -83,6 +85,7 @@ public class Challenge {
      */
     public Vehicle getVehicle(Character symbol) {
 
+        //TODO add enhanced switch here along with a foreach elsewhere to determine which car to summon
        try{
                int VehicleSizeNumber = Integer.parseInt(VehicleSize.get(0));
                Orientation CarOrientation = Coordinate.CarOrientation.get(0);

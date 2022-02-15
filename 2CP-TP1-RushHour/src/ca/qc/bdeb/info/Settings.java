@@ -77,36 +77,9 @@ class Settings {
     public Colour getColour(Character symbol) {
 
 
-        /*
-
-        String CurrentColour;
-
-
-            switch()
-            {
-                case "A" -> {return Colour.ARMY;}
-                case "B" -> {return Colour.BABY;}
-              case "C" -> {return Colour.CREAM;}
-              case "E" -> {return Colour.ELECTRIC;}
-              case "G" -> {return Colour.GREEN;}
-              case "I" -> {return Colour.IRON;}
-              case "L" -> {return Colour.LILAC;}
-              case "M" -> {return Colour.MINT;}
-              case "O" -> {return Colour.ORANGE;}
-              case "P" -> {return Colour.PINK;}
-              case "R" -> {return Colour.RED;}
-              case "S" -> {return Colour.SADDLE;}
-              case "T" -> {return Colour.TURQUOISE;}
-              case "V" -> {return Colour.VIOLET;}
-              case "W" -> {return Colour.WHEAT;}
-              case "Y" -> {return Colour.YELLOW;}
-
-            }
-
-         */
         int CorrectPosition = 0;
         for (int i = 0 ; i < Colour.values().length ; i++){
-            if (symbol == Colour.values()[i + 3].name().charAt(0));
+            if (symbol == Colour.values()[i].name().charAt(0));
             CorrectPosition = i;
         }
 
@@ -123,7 +96,7 @@ class Settings {
         int AttemptCounter = 0;
 
         for(int i = 0 ; i < Colour.values().length ; i++){
-            if(symbol != Colour.values()[i + 3].name().charAt(0));
+            if(symbol != Colour.values()[i].name().charAt(0));
             AttemptCounter++;
         }
         if(AttemptCounter == Colour.values().length){
