@@ -1,6 +1,6 @@
 package ca.qc.bdeb.info;
 
-import java.util.Locale;
+import java.util.ArrayList;
 
 public class Cell {
 
@@ -47,23 +47,29 @@ public class Cell {
 
 
     private void CallCars(int CarCount){
+
         Coordinate CurrentCarCoord = new Coordinate();                          // Coordinate
         int VehicleSizeNumber = Integer.parseInt(Challenge.VehicleSize.get(CarCount)); //int
         Orientation CurrentCarOrientation = Coordinate.CarOrientation.get(CarCount); // Orientation
-        char symbol = Challenge.VehicleColour.get(CarCount).toUpperCase(Locale.ROOT).charAt(0); //Symbol
+        char symbol = Challenge.VehicleColour.get(CarCount).toUpperCase().charAt(0); //Symbol
 
         Vehicle vehicle = new Vehicle(symbol ,VehicleSizeNumber, CurrentCarCoord , CurrentCarOrientation);
-
-        Colour symbolcolour = Colour.VIOLET;
-
-        if(Settings.get().isValidSymbol(symbol)) {
-             symbolcolour = Settings.get().getColour(symbol);
-        } else {
+        ArrayList<Coordinate> CoordInstance = vehicle.getCoordinates();
+        Colour symbolcolour;
+        try{
+            symbolcolour = Settings.get().getColour(symbol);
+        } catch (Exception e){
+            System.out.println('!');
             symbolcolour = null;
         }
-        int HorizontalCoords = Integer.parseInt(Coordinate.HorizontalCoordinates.get(CarCount));
-        int VerticalCoords = Integer.parseInt(Coordinate.VerticalCoordinates.get(CarCount));
-        Parking[HorizontalCoords][VerticalCoords] = (" " + symbolcolour + symbol + Colour.IRON);
+        if(Settings.get().isValidSymbol(symbol)){
+
+            int HorizontalCoords = Integer.parseInt(Coordinate.HorizontalCoordinates.get(CarCount));
+            int VerticalCoords = Integer.parseInt(Coordinate.VerticalCoordinates.get(CarCount));
+
+            Parking[HorizontalCoords][VerticalCoords] = (" " + symbolcolour + symbol + Colour.IRON);
+        }
+
     }
 
 
@@ -75,7 +81,7 @@ public class Cell {
         for (int i = 1 ; i < 7 ; i++){
             for(int a = 0 ; a < 8 ; a++){
                if(a == 0){
-                   System.out.println("");
+                   System.out.print("\n");
                    System.out.print(Parking[0][i]);
                } else {
                    System.out.print(Parking[a][i]);
@@ -85,35 +91,11 @@ public class Cell {
         }
         for (int i = 0 ; i < 8 ; i++){ //bottom piece
             if(i == 0){
-                System.out.println("");
+                System.out.print("\n");
             } else {
                 System.out.print(Parking[7][i]);
             }
 
-        }
-    }
-
-
-    private Colour getVehicleColour(char symbol) {
-
-        switch(symbol){
-            case 'A' -> {return Colour.ARMY;}
-            case 'B' -> {return Colour.BABY;}
-            case 'C' -> {return Colour.CREAM;}
-            case 'E' -> {return Colour.ELECTRIC;}
-            case 'G' -> {return Colour.GREEN;}
-            case 'I' -> {return Colour.IRON;}
-            case 'L' -> {return Colour.LILAC;}
-            case 'M' -> {return Colour.MINT;}
-            case 'O' -> {return Colour.ORANGE;}
-            case 'P' -> {return Colour.PINK;}
-            case 'R' -> {return Colour.RED;}
-            case 'S' -> {return Colour.SADDLE;}
-            case 'T' -> {return Colour.TURQUOISE;}
-            case 'V' -> {return Colour.VIOLET;}
-            case 'W' -> {return Colour.WHEAT;}
-            case 'Y' -> {return Colour.YELLOW;}
-            default -> {return null;}
         }
     }
 
