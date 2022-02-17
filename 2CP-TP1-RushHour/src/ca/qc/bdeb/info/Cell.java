@@ -54,7 +54,8 @@ public class Cell {
         char symbol = Challenge.VehicleColour.get(CarCount).toUpperCase().charAt(0); //Symbol
 
         Vehicle vehicle = new Vehicle(symbol ,VehicleSizeNumber, CurrentCarCoord , CurrentCarOrientation);
-        ArrayList<Coordinate> CoordInstance = vehicle.getCoordinates();
+
+
         Colour symbolcolour;
         try{
             symbolcolour = Settings.get().getColour(symbol);
@@ -67,7 +68,22 @@ public class Cell {
             int HorizontalCoords = Integer.parseInt(Coordinate.HorizontalCoordinates.get(CarCount));
             int VerticalCoords = Integer.parseInt(Coordinate.VerticalCoordinates.get(CarCount));
 
-            Parking[HorizontalCoords][VerticalCoords] = (" " + symbolcolour + symbol + Colour.IRON);
+            Parking[HorizontalCoords][VerticalCoords] = (symbolcolour + " " + vehicle.getSymbol() + Colour.IRON);
+
+            switch (vehicle.getOrientation()) {
+
+                case Horizontal -> {
+                    for(int i = 0 ; i < VehicleSizeNumber ; i++){
+                        Parking[HorizontalCoords + i][VerticalCoords] = (symbolcolour + " " + vehicle.getSymbol() + Colour.IRON);
+                    }
+                }
+
+                case Vertical -> {
+                    for(int i = 0 ; i < VehicleSizeNumber ; i++){
+                        Parking[HorizontalCoords][VerticalCoords + i] = (symbolcolour + " " + vehicle.getSymbol() + Colour.IRON);
+                    }
+                }
+            }
         }
 
     }
@@ -81,8 +97,7 @@ public class Cell {
         for (int i = 1 ; i < 7 ; i++){
             for(int a = 0 ; a < 8 ; a++){
                if(a == 0){
-                   System.out.print("\n");
-                   System.out.print(Parking[0][i]);
+                   System.out.print("\n" + Parking[0][i]);
                } else {
                    System.out.print(Parking[a][i]);
                }

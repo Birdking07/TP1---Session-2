@@ -52,6 +52,10 @@ public class Command {
 
     }
 
+    public char[] getChoises(){
+        return choises;
+    }
+
     public boolean isQuit(boolean Quit) {
 
         if (user.equalsIgnoreCase("q")) {

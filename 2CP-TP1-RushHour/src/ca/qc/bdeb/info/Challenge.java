@@ -165,8 +165,8 @@ public class Challenge {
      * @return le résultat de la tentative de déplacement (ce résultat peut être un déplacement)
      */
     public MoveResult moveVehicle(Command command) {
-        
-    return null;
+
+        return MoveResult.Success;
         // INSÉREZ VOTRE CODE ICI
     }
 
