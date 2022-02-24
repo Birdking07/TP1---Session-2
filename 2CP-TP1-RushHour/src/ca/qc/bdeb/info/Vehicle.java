@@ -45,7 +45,7 @@ public class Vehicle {
         ArrayList<Coordinate> CurrentCarCoordinates = new ArrayList<>();
 
        for (int i = 0 ; i < Challenge.FileSize ; i++){
-           Coordinate Position = new Coordinate();
+           Coordinate Position = new Coordinate(i);
            CurrentCarCoordinates.add(Position);
        }
 
@@ -60,11 +60,9 @@ public class Vehicle {
      * @param deltaY déplacement sur l'axe vertical
      */
     public void move(int deltaX, int deltaY) {
-       if(this.orientation == Orientation.Horizontal ){
 
-       } else {
-
-       }
+        switch (deltaX){
+        }
         // INSÉREZ VOTRE CODE ICI
     }
 

@@ -1,8 +1,10 @@
 package ca.qc.bdeb.info;
 
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 
 
@@ -18,7 +20,7 @@ public class Challenge {
 
     private ArrayList<Vehicle> vehicles;  // liste des véhicules dans le stationnement
 
-    private Cell[][] parking;  // grille de stationnement
+    private char[][] preParking = new char[Settings.PARKING_SIZE][Settings.PARKING_SIZE]; // garde les valeurs du grille
 
     private int number;  // numéro du défi
 
@@ -28,7 +30,7 @@ public class Challenge {
     static ArrayList<String> VehicleOrientation = new ArrayList<>();
     static  String[][] DataTable;
     static int FileSize;
-    static int PlayerPosition;
+    private int PlayerPosition;
     private ArrayList<String> Filetext = new ArrayList<>();
 
     /**
@@ -86,15 +88,29 @@ public class Challenge {
     public Vehicle getVehicle(Character symbol) {
 
         //TODO add enhanced switch here along with a foreach elsewhere to determine which car to summon
-       try{
-               int VehicleSizeNumber = Integer.parseInt(VehicleSize.get(0));
-               Orientation CarOrientation = Coordinate.CarOrientation.get(0);
-               Coordinate LoadCoordiate = new Coordinate();
-               Vehicle CurrentVehicle = new Vehicle(symbol , VehicleSizeNumber ,LoadCoordiate , CarOrientation );
 
-           return CurrentVehicle;
-       } catch (Exception e) {
-           return null;
+        int FinalCar = 0;
+        int CurrentCar = 0;
+        String Carsymbol = symbol.toString();
+        boolean isCar = false;
+
+        for(String i : VehicleColour){
+            if(Carsymbol.equals(VehicleColour.get(CurrentCar))){
+                isCar = true;
+                FinalCar = CurrentCar;
+            }
+            CurrentCar++;
+        }
+
+        if(isCar){
+            int VehicleSizeNumber = Integer.parseInt(VehicleSize.get(FinalCar));
+            Coordinate LoadCoordiate = new Coordinate(FinalCar);
+            Orientation CarOrientation = Coordinate.CarOrientation.get(FinalCar);
+            Vehicle CurrentVehicle = new Vehicle(symbol , VehicleSizeNumber ,LoadCoordiate , CarOrientation );
+
+            return CurrentVehicle;
+        } else {
+            return null;
         }
 
                 //length , Coordinate position , and Orientation orientation
@@ -109,7 +125,11 @@ public class Challenge {
      */
     public boolean isSolved(){
 
-            return false;
+        String player = VehicleColour.get(PlayerPosition);
+        Character RedCar = player.charAt(0);
+        Vehicle vehicle = getVehicle(RedCar);
+
+        return false;
         // INSÉREZ VOTRE CODE ICI
     }
 
@@ -166,7 +186,42 @@ public class Challenge {
      */
     public MoveResult moveVehicle(Command command) {
 
-        return MoveResult.Success;
+        char[] choises = command.getChoises();
+        Character symbol = choises[0];
+       Vehicle vehicle = getVehicle(symbol);
+
+       switch (choises[1]){
+
+           case 'N' -> vehicle.move(0 , 1);
+
+           case 'S' -> vehicle.move(0 , -1);
+
+           case 'E' -> vehicle.move(1 , 0);
+
+           case 'W' -> vehicle.move(-1 , 0);
+       }
+
+       ArrayList<Coordinate> coords = vehicle.getCoordinates();
+       for(int c = 0 ; c < FileSize ; c++){
+           for (int i = 0 ; i < 8 ; i++){
+               for (int a = 0 ; a < 8 ; a++){
+                   int HorizontalPos = Integer.parseInt(coords.get(c).HorizontalCoordinates.get(c));
+                   int VerticalPos = Integer.parseInt(coords.get(c).VerticalCoordinates.get(c));
+                   if(Objects.equals(preParking[i][a], Settings.BORDER_SYMBOL.toString()) && VerticalPos == i && HorizontalPos == a){
+                       return MoveResult.Border;
+                   } else if(!(Objects.equals(preParking[i][a], "")) && HorizontalPos == i && VerticalPos == a){
+                       return MoveResult.Vehicle;
+                   } else {
+                       return MoveResult.Success;
+                   }
+               }
+           }
+       }
+
+
+
+
+       return MoveResult.Success;
         // INSÉREZ VOTRE CODE ICI
     }
 
@@ -176,10 +231,86 @@ public class Challenge {
     public void print() {
 
         System.out.println(Colour.RED +" R U S H" + Colour.YELLOW + " H @ U R" + Colour.IRON);
-        Cell Parking_lot = new Cell();
+
+        for(int i = 0 ; i < Settings.PARKING_SIZE ; i++){
+
+            preParking[0][i] = Settings.BORDER_SYMBOL;
+            if(i == 7){
+                System.out.print("\n");
+            }
+        }
+
+        for(int i = 1 ; i < 7 ; i++){
+            for(int a = 0 ; a < 8 ; a++){
+                if(i == 3 && a == 7){
+                  preParking[i][a] = ' ';
+                } else if(a == 0 || a == 7){
+                    preParking[i][a] = Settings.BORDER_SYMBOL;
+                } else {
+                    preParking[i][a] = ' ';
+                }
+
+            }
+        }
+
+
+        for (int i = 0 ; i < FileSize ; i++){
+
+            char symbol = VehicleColour.get(i).charAt(0);
+
+            Vehicle vehicle = getVehicle(symbol);
+            ArrayList<Coordinate> coord = vehicle.getCoordinates();
 
 
 
+            if(Settings.get().isValidSymbol(symbol)){
+
+                int HorizontalCoords = Integer.parseInt(coord.get(i).HorizontalCoordinates.get(i));
+                int VerticalCoords = Integer.parseInt(coord.get(i).VerticalCoordinates.get(i));
+
+                preParking[HorizontalCoords][VerticalCoords] = (vehicle.getSymbol());
+
+                switch (vehicle.getOrientation()) {
+
+                    case Horizontal -> {
+                        for (int a = 0; a < Integer.parseInt(VehicleSize.get(i)); a++) {
+                            preParking[VerticalCoords + a][HorizontalCoords] = ( vehicle.getSymbol());
+                        }
+                    }
+
+                    case Vertical -> {
+                        for (int a = 0; a < Integer.parseInt(VehicleSize.get(i)); a++) {
+                            preParking[VerticalCoords][HorizontalCoords + a] = ( vehicle.getSymbol());
+                        }
+                    }
+                }
+        }
+
+
+
+        }
+
+
+        for(int i = 0 ; i < Settings.PARKING_SIZE ; i++){
+
+            preParking[7][i] = Settings.BORDER_SYMBOL;
+        }
+
+        for (int i = 0 ; i < Settings.PARKING_SIZE ; i++){
+            for (int a = 0 ; a < Settings.PARKING_SIZE ; a++){
+                if (a == 7){
+                    System.out.print("\n");
+                }
+                if (!(preParking[i][a] == ' ') && preParking[i][a] == Settings.BORDER_SYMBOL){
+                    char symbol = preParking[i][a];
+                    Cell cell = new Cell(preParking[i][a] , symbol);
+                } else {
+                    Cell cell = new Cell(preParking[i][a] ,' ' );
+                }
+
+
+            }
+        }
         // INSÉREZ VOTRE CODE ICI
     }
 
