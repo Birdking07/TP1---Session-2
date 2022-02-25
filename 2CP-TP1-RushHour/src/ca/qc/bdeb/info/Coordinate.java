@@ -22,8 +22,8 @@ public class Coordinate {
 
             String[] CurrentCoordinates = Challenge.VehicleCoordinates.get(CarCounter).split(",");
 
-            VerticalCoordinates.add(CurrentCoordinates[0]);
-            HorizontalCoordinates.add(CurrentCoordinates[1]);
+            HorizontalCoordinates.add(CurrentCoordinates[0]);
+            VerticalCoordinates.add(CurrentCoordinates[1]);
 
             MergedCoordinates.add(HorizontalCoordinates.get(CarCounter) + " " + VerticalCoordinates.get(CarCounter));
     }

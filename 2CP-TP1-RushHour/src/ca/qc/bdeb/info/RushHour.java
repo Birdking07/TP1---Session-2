@@ -36,7 +36,7 @@ public class RushHour {
 
         // boucle de jeu
         while (true) {
-            challenge.print();
+           challenge.print();
             Command command = prompt.readUserCommand(challenge);
 
             boolean Quit = false;

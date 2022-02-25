@@ -2,28 +2,33 @@ package ca.qc.bdeb.info;
  public class Cell {
 
 
-    public Cell(char currentSymbol , char symbol){
+    public Cell(char currentSymbol , int currentRow){
 
 
-        CellPrinter(currentSymbol , symbol);
+        CellPrinter(currentSymbol , currentRow);
 
 
 
     }
-    public void CellPrinter(char printedSymbol , char symbol) {
+    public void CellPrinter(char printedSymbol , int currentRow) {
 
-        if (symbol != ' ') {
+        if (!(printedSymbol == ' ' || printedSymbol == Settings.BORDER_SYMBOL)) {
             Colour symbolcolour;
             try {
-                symbolcolour = Settings.get().getColour(symbol);
+                symbolcolour = Settings.get().getColour(printedSymbol);
             } catch (Exception e) {
                 System.out.println('!');
                 symbolcolour = null;
             }
+
             System.out.print(symbolcolour + " " + printedSymbol + Colour.IRON);
 
         } else {
+
             System.out.print(" " + printedSymbol);
+            if (currentRow == 7){
+                System.out.print("\n");
+            }
         }
     }
  }
