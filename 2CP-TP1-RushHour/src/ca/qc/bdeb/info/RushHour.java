@@ -92,6 +92,18 @@ public class RushHour {
      */
     private static void playSFX(Audio sounds, MoveResult result) {
 
+       switch (result){
+
+           case Solved -> sounds.play(1);
+
+           case Border -> sounds.play(2);
+
+           case Vehicle -> sounds.play(3);
+
+       }
+
+
+
         // INSÉREZ VOTRE CODE ICI
     }
 }

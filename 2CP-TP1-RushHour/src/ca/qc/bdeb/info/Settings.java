@@ -5,7 +5,6 @@ import java.awt.*;
 import java.util.ArrayList; //ajout
 
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 
@@ -79,9 +78,10 @@ class Settings {
 
 
         int CorrectPosition = 0;
-        for (int i = 0 ; i < Colour.values().length - 3 ; i++){
-            if (symbol == Colour.values()[i + 3].name().charAt(0));
-            CorrectPosition = i;
+        for (int i = 0 ; i < Colour.values().length ; i++){
+            if (symbol == Colour.values()[i].name().charAt(0)){
+                CorrectPosition = i;
+            }
         }
 
         // INSÉREZ VOTRE CODE ICI
@@ -102,11 +102,7 @@ class Settings {
             }
 
         }
-        if(AttemptCounter == Colour.values().length){
-            return false;
-        } else {
-            return true;
-        }
+        return AttemptCounter != Colour.values().length;
 
         // INSÉREZ VOTRE CODE ICI
     }

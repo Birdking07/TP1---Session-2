@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 public class Coordinate {
 
-     static ArrayList<String> HorizontalCoordinates = new ArrayList<>();
-     static ArrayList<String> VerticalCoordinates = new ArrayList<>();
-    static ArrayList<String> MergedCoordinates = new ArrayList<>();
-    static ArrayList<Orientation> CarOrientation = new ArrayList<>();
+     public String HorizontalCoordinates;
+     public String VerticalCoordinates;
+     public ArrayList<String> MergedCoordinates = new ArrayList<>();
+     public Orientation CarOrientation;
 
     public Coordinate(int CarCounter){
         ReadingCarCoordinates(CarCounter);
@@ -22,19 +22,19 @@ public class Coordinate {
 
             String[] CurrentCoordinates = Challenge.VehicleCoordinates.get(CarCounter).split(",");
 
-            HorizontalCoordinates.add(CurrentCoordinates[0]);
-            VerticalCoordinates.add(CurrentCoordinates[1]);
+            HorizontalCoordinates = CurrentCoordinates[0];
+            VerticalCoordinates = CurrentCoordinates[1];
 
-            MergedCoordinates.add(HorizontalCoordinates.get(CarCounter) + " " + VerticalCoordinates.get(CarCounter));
+            MergedCoordinates.add(HorizontalCoordinates + " " + VerticalCoordinates );
     }
 
 
     private void ReadingCarOrientation(int CarCounter){
 
-            if(Challenge.VehicleOrientation.get(CarCounter).equalsIgnoreCase("h")){
-                CarOrientation.add(Orientation.Horizontal);
-            } else {
-                CarOrientation.add(Orientation.Vertical);
+            if(Challenge.VehicleOrientation.get(CarCounter).equalsIgnoreCase("H")){
+                CarOrientation = Orientation.Horizontal;
+            } else if (Challenge.VehicleOrientation.get(CarCounter).equalsIgnoreCase("V")){
+                CarOrientation = Orientation.Vertical;
             }
 
     }

@@ -21,10 +21,10 @@ public class Vehicle {
     /**
      * Constructeur.
      *
-     * @param symbol symbole (caractère associée, ex.: 'A')
+     * @param symbol symbole (caractère associé, ex : 'A')
      * @param length longueur du véhicule
-     * @param position emplacement du véhicule dans le stationnement (ex.: 1,2)
-     * @param orientation orientation du véhicule (ex.: horizontale)
+     * @param position emplacement du véhicule dans le stationnement (ex : 1,2)
+     * @param orientation orientation du véhicule (ex : horizontale)
      */
     public Vehicle(Character symbol, int length, Coordinate position, Orientation orientation) {
 
@@ -61,8 +61,25 @@ public class Vehicle {
      */
     public void move(int deltaX, int deltaY) {
 
-        switch (deltaX){
+        int TrueHorizontal = Integer.parseInt(position.HorizontalCoordinates);
+        int TrueVertical = Integer.parseInt(position.VerticalCoordinates);
+
+       if (deltaX == 1){
+           TrueHorizontal += 1;
+           position.HorizontalCoordinates = String.valueOf(TrueHorizontal);
+       } else if (deltaX == -1){
+           TrueHorizontal -= 1;
+           position.HorizontalCoordinates = String.valueOf(TrueHorizontal);
+       }
+
+        if (deltaY == 1){
+            TrueVertical += 1;
+            position.VerticalCoordinates = String.valueOf(TrueVertical);
+        } else if (deltaY == -1){
+            TrueVertical -= 1;
+            position.VerticalCoordinates = String.valueOf(TrueVertical);
         }
+
         // INSÉREZ VOTRE CODE ICI
     }
 

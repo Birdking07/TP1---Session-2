@@ -13,15 +13,15 @@ package ca.qc.bdeb.info;
     public void CellPrinter(char printedSymbol , int currentRow) {
 
         if (!(printedSymbol == ' ' || printedSymbol == Settings.BORDER_SYMBOL)) {
-            Colour symbolcolour;
+            Colour symbolColour;
             try {
-                symbolcolour = Settings.get().getColour(printedSymbol);
+                symbolColour = Settings.get().getColour(printedSymbol);
             } catch (Exception e) {
                 System.out.println('!');
-                symbolcolour = null;
+                symbolColour = null;
             }
 
-            System.out.print(symbolcolour + " " + printedSymbol + Colour.IRON);
+            System.out.print( " " + symbolColour + printedSymbol + Colour.IRON);
 
         } else {
 

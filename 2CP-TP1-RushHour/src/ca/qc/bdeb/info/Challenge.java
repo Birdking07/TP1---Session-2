@@ -69,7 +69,6 @@ public class Challenge {
 
                     VehicleOrientation.add(DataTable[i][3]);
 
-
                 }
 
 
@@ -100,30 +99,33 @@ public class Challenge {
 
             char symbol = VehicleColour.get(i).charAt(0);
             Vehicle vehicle = getVehicle(symbol);
-            ArrayList<Coordinate> coord = vehicle.getCoordinates();
+            ArrayList<Coordinate> coordinate = vehicle.getCoordinates();
 
 
-            System.out.println(coord.get(i).HorizontalCoordinates.get(i));
 
            if(Settings.get().isValidSymbol(symbol)){
 
-               int HorizontalCoords = Integer.parseInt(coord.get(i).HorizontalCoordinates.get(i));
-               int VerticalCoords = Integer.parseInt(coord.get(i).VerticalCoordinates.get(i));
+               int valueTest = Integer.parseInt(vehicle.getPosition().HorizontalCoordinates);
 
+               int HorizontalCoords = Integer.parseInt(coordinate.get(i).HorizontalCoordinates);
+               int VerticalCoords = Integer.parseInt(coordinate.get(i).VerticalCoordinates);
 
+               if (valueTest != HorizontalCoords){
+                   HorizontalCoords = valueTest;
+               }
 
 
                 switch (vehicle.getOrientation()) {
 
                     case Vertical -> {
                         for (int a = 0; a < Integer.parseInt(VehicleSize.get(i)); a++) {
-                            preParking[HorizontalCoords][VerticalCoords + a] = " " +  vehicle.getSymbol();
+                            preParking[VerticalCoords + a][HorizontalCoords] = " " + vehicle.getSymbol();
                         }
                     }
 
                     case Horizontal -> {
                         for (int a = 0; a < Integer.parseInt(VehicleSize.get(i)); a++) {
-                            preParking[HorizontalCoords + a][VerticalCoords] = " " +  vehicle.getSymbol();
+                            preParking[VerticalCoords][HorizontalCoords + a] = " " + vehicle.getSymbol();
                         }
                     }
                 }
@@ -156,11 +158,11 @@ public class Challenge {
 
         int FinalCar = 0;
         int CurrentCar = 0;
-        String Carsymbol = symbol.toString();
+        String carSymbol = symbol.toString();
         boolean isCar = false;
 
         for(String i : VehicleColour){
-            if(Carsymbol.equals(VehicleColour.get(CurrentCar))){
+            if(carSymbol.equalsIgnoreCase(VehicleColour.get(CurrentCar))){
                 isCar = true;
                 FinalCar = CurrentCar;
             }
@@ -169,22 +171,19 @@ public class Challenge {
 
         if(isCar){
             int VehicleSizeNumber = Integer.parseInt(VehicleSize.get(FinalCar));
-            Coordinate LoadCoordiate = new Coordinate(FinalCar);
-            Orientation CarOrientation = Coordinate.CarOrientation.get(FinalCar);
-            Vehicle CurrentVehicle = new Vehicle(symbol , VehicleSizeNumber ,LoadCoordiate , CarOrientation );
+            Coordinate LoadCoordinate = new Coordinate(FinalCar);
+            Orientation CarOrientation = LoadCoordinate.CarOrientation;
 
-            return CurrentVehicle;
+            return new Vehicle(symbol , VehicleSizeNumber ,LoadCoordinate , CarOrientation );
         } else {
             return null;
         }
-
-                //length , Coordinate position , and Orientation orientation
 
         // INSÉREZ VOTRE CODE ICI
     }
 
     /**
-     * Indique si le défi (challenge) est solutionné.
+     * Indique si le défi (challenge) est résolu.
      *
      * @return true si le défi est résolu, false sinon
      */
@@ -192,9 +191,13 @@ public class Challenge {
 
         String player = VehicleColour.get(PlayerPosition);
         Character RedCar = player.charAt(0);
-        Vehicle vehicle = getVehicle(RedCar);
+        Vehicle playerCar = getVehicle(RedCar);
 
-        return false;
+        Coordinate endgame = playerCar.getPosition();
+        int TrueHorizontal = Integer.parseInt(endgame.HorizontalCoordinates) + Integer.parseInt(VehicleSize.get(PlayerPosition));
+
+        return endgame.VerticalCoordinates.equals("3") && endgame.HorizontalCoordinates.equals(String.valueOf(TrueHorizontal));
+
         // INSÉREZ VOTRE CODE ICI
     }
 
@@ -211,7 +214,7 @@ public class Challenge {
             File currentGame = new File(CurrentFile);
             Scanner ReadFile = new Scanner(currentGame);
 
-            Filetext = new ArrayList<String>();
+            Filetext = new ArrayList<>();
             while (ReadFile.hasNextLine()) {
                 Filetext.add(ReadFile.nextLine());
             }
@@ -252,29 +255,46 @@ public class Challenge {
     public MoveResult moveVehicle(Command command) {
 
         char[] choises = command.getChoises();
-        Character symbol = choises[0];
+        Character symbol = String.valueOf(choises[0]).toUpperCase().charAt(0);
        Vehicle vehicle = getVehicle(symbol);
 
-       switch (choises[1]){
+       char movement = String.valueOf(choises[1]).toUpperCase().charAt(0);
 
-           case 'N' -> vehicle.move(0 , 1);
+       if (vehicle.getOrientation() == Orientation.Horizontal){
+           switch (movement){
 
-           case 'S' -> vehicle.move(0 , -1);
+               case 'E' -> vehicle.move(1 , 0);
 
-           case 'E' -> vehicle.move(1 , 0);
+               case 'W' -> vehicle.move(-1 , 0);
+           }
 
-           case 'W' -> vehicle.move(-1 , 0);
+       } else if(vehicle.getOrientation() == Orientation.Vertical){
+
+           switch (movement){
+               case 'N' -> vehicle.move(0 , 1);
+
+               case 'S' -> vehicle.move(0 , -1);
+
+           }
+
        }
 
-       ArrayList<Coordinate> coords = vehicle.getCoordinates();
+
+
+
+        ArrayList<Coordinate> coords = vehicle.getCoordinates();
        for(int c = 0 ; c < FileSize ; c++){
            for (int i = 0 ; i < 8 ; i++){
                for (int a = 0 ; a < 8 ; a++){
-                   int HorizontalPos = Integer.parseInt(coords.get(c).HorizontalCoordinates.get(c));
-                   int VerticalPos = Integer.parseInt(coords.get(c).VerticalCoordinates.get(c));
+
+                   int HorizontalPos = Integer.parseInt(coords.get(c).HorizontalCoordinates);
+                   int VerticalPos = Integer.parseInt(coords.get(c).VerticalCoordinates);
+
                    if(Objects.equals(preParking[i][a], Settings.BORDER_SYMBOL.toString()) && VerticalPos == i && HorizontalPos == a){
                        return MoveResult.Border;
-                   } else if(!(Objects.equals(preParking[i][a], "")) && HorizontalPos == i && VerticalPos == a){
+                   } else if(VerticalPos == 3 && HorizontalPos == 8){
+                       return MoveResult.Solved;
+                   } else if (!(Objects.equals(preParking[i][a], "")) && VerticalPos == i && HorizontalPos == a){
                        return MoveResult.Vehicle;
                    } else {
                        return MoveResult.Success;
@@ -286,7 +306,7 @@ public class Challenge {
 
 
 
-       return MoveResult.Success;
+       return MoveResult.Invalid;
         // INSÉREZ VOTRE CODE ICI
     }
 
@@ -295,18 +315,17 @@ public class Challenge {
      */
     public void print() {
 
+       // buildParking(); ??
 
         System.out.println(Colour.RED +" R U S H" + Colour.YELLOW + " H @ U R" + Colour.IRON);
 
         for (int i = 0 ; i < Settings.PARKING_SIZE ; i++){
             for (int a = 0 ; a < Settings.PARKING_SIZE ; a++){
 
-                if (!(Objects.equals(preParking[i][a], "  ")) && Objects.equals(preParking[i][a], Settings.BORDER_SYMBOL.toString())){
+                if (!(Objects.equals(preParking[i][a], "  ") || Objects.equals(preParking[i][a], Settings.BORDER_SYMBOL.toString()))){
                     char symbol = preParking[i][a].charAt(0);
-                    parking[i][a] = new Cell(preParking[i][a].charAt(1) , a);
-                } else {
-                    parking[i][a] = new Cell(preParking[i][a].charAt(1) , a);
                 }
+                parking[i][a] = new Cell(preParking[i][a].charAt(1) , a);
 
 
             }
