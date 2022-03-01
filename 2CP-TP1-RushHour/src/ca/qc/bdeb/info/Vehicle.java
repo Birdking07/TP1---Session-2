@@ -45,8 +45,8 @@ public class Vehicle {
         ArrayList<Coordinate> CurrentCarCoordinates = new ArrayList<>();
 
        for (int i = 0 ; i < Challenge.FileSize ; i++){
-           Coordinate Position = new Coordinate(i);
-           CurrentCarCoordinates.add(Position);
+            position = new Coordinate(i);
+           CurrentCarCoordinates.add(position);
        }
 
        return CurrentCarCoordinates;

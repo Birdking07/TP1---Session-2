@@ -105,14 +105,10 @@ public class Challenge {
 
            if(Settings.get().isValidSymbol(symbol)){
 
-               int valueTest = Integer.parseInt(vehicle.getPosition().HorizontalCoordinates);
 
                int HorizontalCoords = Integer.parseInt(coordinate.get(i).HorizontalCoordinates);
                int VerticalCoords = Integer.parseInt(coordinate.get(i).VerticalCoordinates);
 
-               if (valueTest != HorizontalCoords){
-                   HorizontalCoords = valueTest;
-               }
 
 
                 switch (vehicle.getOrientation()) {
