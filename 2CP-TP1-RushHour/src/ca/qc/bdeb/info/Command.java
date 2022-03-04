@@ -6,8 +6,8 @@ import java.util.Scanner;
 public class Command {
 
 
-    private char[] choises;
-    private String user;
+    private char[] choices;
+    private final String user;
 
     public Command(){
 
@@ -15,35 +15,36 @@ public class Command {
         user = scanner.nextLine();
 
         if (!(user.equalsIgnoreCase("q"))){
-           choises = user.toCharArray();
-           if (choises.length == 2){
+           choices = user.toCharArray();
+           if (choices.length == 2){
 
                    boolean valid = false;
 
                    for (int i = 0 ; i < Challenge.FileSize ; i++){
                        char c = Challenge.VehicleColour.get(i).charAt(0);
-                       if(c == choises[0]){
+                       if (c == choices[0]) {
                            valid = true;
+                           break;
                        }
                    }
 
 
                    String[] directions = { "N" , "S" , "E" , "W" };
-                   int attemptcounter = 0;
+                   int attemptCounter = 0;
 
                    for (int i = 0 ; i < 4 ; i++){
-                       if(directions[i].equalsIgnoreCase(String.valueOf(choises[1]))){
+                       if(directions[i].equalsIgnoreCase(String.valueOf(choices[1]))){
                            valid = true;
-                       } else if(attemptcounter == 3){
+                       } else if(attemptCounter == 3){
                            valid = false;
                        } else {
-                           attemptcounter++;
+                           attemptCounter++;
                        }
 
                    }
 
                    if (!valid){
-                       choises = null;
+                       choices = null;
                    }
 
            } else {
@@ -54,15 +55,15 @@ public class Command {
 
 
         } else {
-            System.out.println("Fermetture du jeu");
+            System.out.println("Fermeture du jeu");
         }
 
 
 
     }
 
-    public char[] getChoises(){
-        return choises;
+    public char[] getChoices(){
+        return choices;
     }
 
     public boolean isQuit(boolean Quit) {
