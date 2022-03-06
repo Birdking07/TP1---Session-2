@@ -52,7 +52,6 @@ public class RushHour {
                     challenge.print();
                     challenge.printLastOneCompleted();
 
-                    Settings.Current_Challenge++;
 
                     // on laisse le temps à l'effet sonore de terminer
                     try {
@@ -79,7 +78,9 @@ public class RushHour {
      */
     private static Challenge loadNextChallenge() {
 
-    return Challenge.loadChallenge(Settings.Current_Challenge);
+        nextChallenge++;
+
+    return Challenge.loadChallenge(nextChallenge - 1);
 
         // INSÉREZ VOTRE CODE ICI
     }

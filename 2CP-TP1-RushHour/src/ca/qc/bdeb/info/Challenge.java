@@ -4,7 +4,6 @@ package ca.qc.bdeb.info;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Scanner;
 
 
@@ -28,10 +27,8 @@ public class Challenge {
     static ArrayList<String> VehicleSize = new ArrayList<>();
     static ArrayList<String> VehicleCoordinates = new ArrayList<>();
     static ArrayList<String> VehicleOrientation = new ArrayList<>();
-    static  String[][] DataTable;
+    private  String[][] DataTable;
     static int FileSize;
-    private int PlayerPosition;
-    private ArrayList<String> fileText = new ArrayList<>();
 
     /**
      * Construit un objet représentant un défi.
@@ -139,14 +136,8 @@ public class Challenge {
      */
     public boolean isSolved(){
 
-        String player = VehicleColour.get(PlayerPosition);
-        Character RedCar = player.charAt(0);
-        Vehicle playerCar = getVehicle(RedCar);
-
-        Coordinate endgame = playerCar.getPosition();
-        int TrueHorizontal = Integer.parseInt(endgame.HorizontalCoordinates) + Integer.parseInt(VehicleSize.get(PlayerPosition));
-
-        return endgame.VerticalCoordinates.equals("3") && endgame.HorizontalCoordinates.equals(String.valueOf(TrueHorizontal));
+        number++;
+        return preParking[3][7].equals(" R");
 
         // INSÉREZ VOTRE CODE ICI
     }
@@ -159,12 +150,12 @@ public class Challenge {
     private boolean load() {
 
         try {
-            String CurrentFile = Integer.toString(Settings.Current_Challenge);
+            String CurrentFile = Integer.toString(number);
             CurrentFile += ".txt";
             File currentGame = new File(CurrentFile);
             Scanner ReadFile = new Scanner(currentGame);
 
-            fileText = new ArrayList<>();
+            ArrayList<String> fileText = new ArrayList<>();
             while (ReadFile.hasNextLine()) {
                 fileText.add(ReadFile.nextLine());
             }
@@ -175,15 +166,9 @@ public class Challenge {
             for (int i = 0 ; i < FileSize; i++){
                 String[] SplitValues = fileText.get(i).split("\\|");
 
-                for(int a = 0 ; a < 4 ; a++){
-                    DataTable[i][a] = SplitValues[a];
-                }
+                System.arraycopy(SplitValues, 0, DataTable[i], 0, 4);
 
                 VehicleColour.add(DataTable[i][0]);
-
-                if(VehicleColour.get(i).equalsIgnoreCase("R")){
-                    PlayerPosition = i;
-                }
 
 
                 VehicleSize.add(DataTable[i][1]);
@@ -274,19 +259,28 @@ public class Challenge {
         int preHorizontalCoordinates = Integer.parseInt(vehicles.get(currentCar).getPosition().HorizontalCoordinates);
         int preVerticalCoordinates = Integer.parseInt(vehicles.get(currentCar).getPosition().VerticalCoordinates);
 
+        int vehicleLength = Integer.parseInt(VehicleSize.get(currentCar));
 
 
        if (vehicles.get(currentCar).getOrientation() == Orientation.Horizontal){
            switch (movement){
 
                case 'E' -> {
+
                    preParking[preVerticalCoordinates][preHorizontalCoordinates] = "  ";
                    vehicles.get(currentCar).move(1 , 0);
+
+
                }
 
                case 'W' -> {
-
+                   preParking[preVerticalCoordinates][preHorizontalCoordinates + vehicleLength - 1] = "  ";
                    vehicles.get(currentCar).move(-1 , 0);
+
+
+               }
+               default -> {
+                   return MoveResult.Invalid;
                }
            }
 
@@ -296,12 +290,18 @@ public class Challenge {
 
                case 'N' -> {
 
+                   preParking[preVerticalCoordinates + vehicleLength - 1][preHorizontalCoordinates] = "  ";
                    vehicles.get(currentCar).move(0 , -1);
                }
 
                case 'S' -> {
 
+                   preParking[preVerticalCoordinates][preHorizontalCoordinates] = "  ";
                    vehicles.get(currentCar).move(0 , 1);
+
+               }
+               default -> {
+                   return MoveResult.Invalid;
                }
 
            }
@@ -309,26 +309,22 @@ public class Challenge {
        }
 
 
-
+       // ALL MOVEMENT COMMANDS FUNCTIONAL DO NOT TOUCH
 
        int HorizontalCoordinates = Integer.parseInt(vehicles.get(currentCar).getPosition().HorizontalCoordinates);
        int VerticalCoordinates = Integer.parseInt(vehicles.get(currentCar).getPosition().VerticalCoordinates);
 
 
-       if (VerticalCoordinates == 3 && HorizontalCoordinates == 8){
+       if (preParking[3][7].equals(" R")){
+
            return MoveResult.Solved;
        }
 
-                  if (preParking[VerticalCoordinates][HorizontalCoordinates].charAt(0) == Settings.BORDER_SYMBOL){
-                      return MoveResult.Border;
-                  } else if(preParking[VerticalCoordinates][HorizontalCoordinates].charAt(0) == (' ')){
-                      buildParking();
-                      return MoveResult.Success;
-                  } else if (preParking[VerticalCoordinates][HorizontalCoordinates].charAt(0) != ' ' ){
-                      return MoveResult.Vehicle;
-                  } else {
-                    return MoveResult.Invalid;
-                  }
+
+
+
+       buildParking();
+       return MoveResult.Success;
 
         // INSÉREZ VOTRE CODE ICI
     }
@@ -344,9 +340,6 @@ public class Challenge {
         for (int i = 0 ; i < Settings.PARKING_SIZE ; i++){
             for (int a = 0 ; a < Settings.PARKING_SIZE ; a++){
 
-                if (!(Objects.equals(preParking[i][a], "  ") || Objects.equals(preParking[i][a], Settings.BORDER_SYMBOL.toString()))){
-                    char symbol = preParking[i][a].charAt(0);
-                }
                 parking[i][a] = new Cell(preParking[i][a].charAt(1) , a);
 
 

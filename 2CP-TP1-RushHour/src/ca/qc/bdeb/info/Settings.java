@@ -26,7 +26,6 @@ class Settings {
     public static final int PARKING_SIZE = 8;  // bordure + 6 espaces + bordure
     public static final int NB_CHALLENGES = 3;
 
-    public static int Current_Challenge = 1;
 
     private static Settings instance = null;
 

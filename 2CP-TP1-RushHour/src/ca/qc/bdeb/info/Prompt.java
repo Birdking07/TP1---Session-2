@@ -28,7 +28,7 @@ public class Prompt {
      * @return la commande saisie
      */
     public Command readUserCommand(Challenge challenge) {
-        System.out.println("");
+
         print();
 
         return new Command();
