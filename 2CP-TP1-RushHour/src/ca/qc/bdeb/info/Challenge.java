@@ -17,17 +17,16 @@ import java.util.Scanner;
 
 public class Challenge {
 
-    private ArrayList<Vehicle> vehicles = new ArrayList<>();  // liste des véhicules dans le stationnement
+    private final ArrayList<Vehicle> vehicles = new ArrayList<>();  // liste des véhicules dans le stationnement
 
-    private String[][] preParking = new String[Settings.PARKING_SIZE][Settings.PARKING_SIZE]; // garde les valeurs de la grille
-    private Cell[][] parking = new Cell[Settings.PARKING_SIZE][Settings.PARKING_SIZE];
-    private int number;  // numéro du défi
+    private final String[][] preParking = new String[Settings.PARKING_SIZE][Settings.PARKING_SIZE]; // garde les valeurs de la grille
+    private final Cell[][] parking = new Cell[Settings.PARKING_SIZE][Settings.PARKING_SIZE];
+    private final int number;  // numéro du défi
 
     static ArrayList<String> VehicleColour = new ArrayList<>();
     static ArrayList<String> VehicleSize = new ArrayList<>();
     static ArrayList<String> VehicleCoordinates = new ArrayList<>();
     static ArrayList<String> VehicleOrientation = new ArrayList<>();
-    private  String[][] DataTable;
     static int FileSize;
 
     /**
@@ -45,6 +44,7 @@ public class Challenge {
      * Construit la grille de stationnement.
      */
     private void buildParking() {
+
 
         for(int i = 0 ; i < FileSize ; i++){
             char symbol = VehicleColour.get(i).charAt(0);
@@ -105,26 +105,20 @@ public class Challenge {
         int FinalCar = 0;
         int CurrentCar = 0;
         String carSymbol = symbol.toString();
-        boolean isCar = false;
 
         for(String ignored : VehicleColour){
             if(carSymbol.equalsIgnoreCase(VehicleColour.get(CurrentCar))){
-                isCar = true;
+
                 FinalCar = CurrentCar;
             }
             CurrentCar++;
         }
 
-        if(isCar){
             int VehicleSizeNumber = Integer.parseInt(VehicleSize.get(FinalCar));
             Coordinate LoadCoordinate = new Coordinate(FinalCar);
             Orientation CarOrientation = LoadCoordinate.CarOrientation;
 
-
             return new Vehicle(symbol , VehicleSizeNumber ,LoadCoordinate , CarOrientation );
-        } else {
-            return null;
-        }
 
         // INSÉREZ VOTRE CODE ICI
     }
@@ -149,6 +143,11 @@ public class Challenge {
      */
     private boolean load() {
 
+        VehicleSize.clear();
+        VehicleCoordinates.clear();
+        VehicleOrientation.clear();
+        VehicleColour.clear();
+
         try {
             String CurrentFile = Integer.toString(number);
             CurrentFile += ".txt";
@@ -161,20 +160,20 @@ public class Challenge {
             }
             FileSize = fileText.size();
 
-            DataTable = new String[FileSize][4];
+            String[][] dataTable = new String[FileSize][4];
 
             for (int i = 0 ; i < FileSize; i++){
                 String[] SplitValues = fileText.get(i).split("\\|");
 
-                System.arraycopy(SplitValues, 0, DataTable[i], 0, 4);
+                System.arraycopy(SplitValues, 0, dataTable[i], 0, 4);
 
-                VehicleColour.add(DataTable[i][0]);
+                VehicleColour.add(dataTable[i][0]);
 
-                VehicleSize.add(DataTable[i][1]);
+                VehicleSize.add(dataTable[i][1]);
 
-                VehicleCoordinates.add(DataTable[i][2]);
+                VehicleCoordinates.add(dataTable[i][2]);
 
-                VehicleOrientation.add(DataTable[i][3]);
+                VehicleOrientation.add(dataTable[i][3]);
 
             }
 
@@ -310,9 +309,6 @@ public class Challenge {
 
 
        // ALL MOVEMENT COMMANDS FUNCTIONAL DO NOT TOUCH
-
-       int HorizontalCoordinates = Integer.parseInt(vehicles.get(currentCar).getPosition().HorizontalCoordinates);
-       int VerticalCoordinates = Integer.parseInt(vehicles.get(currentCar).getPosition().VerticalCoordinates);
 
 
        if (preParking[3][6].equals(" R")){
