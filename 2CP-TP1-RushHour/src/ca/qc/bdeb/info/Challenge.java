@@ -331,7 +331,6 @@ public class Challenge {
 
        }
 
-       // ALL MOVEMENT COMMANDS FUNCTIONAL DO NOT TOUCH
 
 
         int postMoveH = Integer.parseInt(vehicles.get(currentCar).getPosition().HorizontalCoordinates);
