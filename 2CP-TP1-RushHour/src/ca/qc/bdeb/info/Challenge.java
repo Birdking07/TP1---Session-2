@@ -255,8 +255,8 @@ public class Challenge {
 
        char movement = String.valueOf(choices[1]).toUpperCase().charAt(0);
 
-        int preHorizontalCoordinates = Integer.parseInt(vehicles.get(currentCar).getPosition().HorizontalCoordinates);
-        int preVerticalCoordinates = Integer.parseInt(vehicles.get(currentCar).getPosition().VerticalCoordinates);
+        int preMoveH = Integer.parseInt(vehicles.get(currentCar).getPosition().HorizontalCoordinates);
+        int preMoveV = Integer.parseInt(vehicles.get(currentCar).getPosition().VerticalCoordinates);
 
         int vehicleLength = Integer.parseInt(VehicleSize.get(currentCar));
 
@@ -266,16 +266,27 @@ public class Challenge {
 
                case 'E' -> {
 
-                   preParking[preVerticalCoordinates][preHorizontalCoordinates] = "  ";
-                   vehicles.get(currentCar).move(1 , 0);
-
+                   if (preParking[preMoveV][preMoveH + (vehicleLength)].charAt(1) == Settings.BORDER_SYMBOL){
+                       return MoveResult.Border;
+                   } else if (preParking[preMoveV][preMoveH + (vehicleLength)].charAt(1) != ' '){
+                       return MoveResult.Vehicle;
+                   } else {
+                       preParking[preMoveV][preMoveH] = "  ";
+                       vehicles.get(currentCar).move(1 , 0);
+                   }
 
                }
 
                case 'W' -> {
-                   preParking[preVerticalCoordinates][preHorizontalCoordinates + vehicleLength - 1] = "  ";
-                   vehicles.get(currentCar).move(-1 , 0);
+                   preParking[preMoveV][preMoveH + vehicleLength - 1] = "  ";
 
+                   if (preParking[preMoveV][preMoveH - 1].charAt(1) == Settings.BORDER_SYMBOL){
+                       return MoveResult.Border;
+                   } else if (preParking[preMoveV][preMoveH - 1].charAt(1) != ' ') {
+                       return MoveResult.Vehicle;
+                   } else {
+                       vehicles.get(currentCar).move(-1 , 0);
+                   }
 
                }
                default -> {
@@ -289,14 +300,27 @@ public class Challenge {
 
                case 'N' -> {
 
-                   preParking[preVerticalCoordinates + vehicleLength - 1][preHorizontalCoordinates] = "  ";
-                   vehicles.get(currentCar).move(0 , -1);
+                   if(preParking[preMoveV - 1][preMoveH].charAt(1) == Settings.BORDER_SYMBOL){
+                       return MoveResult.Border;
+                   } else if (preParking[preMoveV - 1][preMoveH].charAt(1) != ' '){
+                       return MoveResult.Vehicle;
+                   } else {
+                       preParking[preMoveV + vehicleLength - 1][preMoveH] = "  ";
+                       vehicles.get(currentCar).move(0 , -1);
+                   }
+
                }
 
                case 'S' -> {
 
-                   preParking[preVerticalCoordinates][preHorizontalCoordinates] = "  ";
-                   vehicles.get(currentCar).move(0 , 1);
+                   if(preParking[preMoveV + vehicleLength][preMoveH].charAt(1) == Settings.BORDER_SYMBOL){
+                       return MoveResult.Border;
+                   } else if (preParking[preMoveV + vehicleLength][preMoveH].charAt(1) != ' '){
+                       return MoveResult.Vehicle;
+                   } else {
+                       preParking[preMoveV][preMoveH] = "  ";
+                       vehicles.get(currentCar).move(0 , 1);
+                   }
 
                }
                default -> {
@@ -307,14 +331,17 @@ public class Challenge {
 
        }
 
-
        // ALL MOVEMENT COMMANDS FUNCTIONAL DO NOT TOUCH
 
+
+        int postMoveH = Integer.parseInt(vehicles.get(currentCar).getPosition().HorizontalCoordinates);
+        int postMoveV = Integer.parseInt(vehicles.get(currentCar).getPosition().HorizontalCoordinates);
 
        if (preParking[3][6].equals(" R")){
 
            return MoveResult.Solved;
        }
+
 
 
 
