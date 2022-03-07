@@ -131,7 +131,7 @@ public class Challenge {
     public boolean isSolved(){
 
 
-        return preParking[3][6].equals(" R");
+        return preParking[3][7].equals(" R");
 
         // INSÉREZ VOTRE CODE ICI
     }
@@ -337,7 +337,7 @@ public class Challenge {
         int postMoveV = Integer.parseInt(vehicles.get(currentCar).getPosition().HorizontalCoordinates);
 
        if (preParking[3][6].equals(" R")){
-
+           buildParking();
            return MoveResult.Solved;
        }
 
