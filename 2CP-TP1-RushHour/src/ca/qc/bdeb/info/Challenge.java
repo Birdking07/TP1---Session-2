@@ -136,8 +136,8 @@ public class Challenge {
      */
     public boolean isSolved(){
 
-        number++;
-        return preParking[3][7].equals(" R");
+
+        return preParking[3][6].equals(" R");
 
         // INSÉREZ VOTRE CODE ICI
     }
@@ -170,7 +170,6 @@ public class Challenge {
 
                 VehicleColour.add(DataTable[i][0]);
 
-
                 VehicleSize.add(DataTable[i][1]);
 
                 VehicleCoordinates.add(DataTable[i][2]);
@@ -191,8 +190,6 @@ public class Challenge {
             }
 
 
-            preParking[3][7] = "  ";
-
             for(int i = 1 ; i < 7 ; i++){
                 for(int a = 1 ; a < 7 ; a++){
 
@@ -206,6 +203,9 @@ public class Challenge {
 
                 preParking[7][i] = " " +  Settings.BORDER_SYMBOL;
             }
+
+            preParking[3][7] = "  ";
+
 
             buildParking();
             ReadFile.close();
@@ -315,7 +315,7 @@ public class Challenge {
        int VerticalCoordinates = Integer.parseInt(vehicles.get(currentCar).getPosition().VerticalCoordinates);
 
 
-       if (preParking[3][7].equals(" R")){
+       if (preParking[3][6].equals(" R")){
 
            return MoveResult.Solved;
        }

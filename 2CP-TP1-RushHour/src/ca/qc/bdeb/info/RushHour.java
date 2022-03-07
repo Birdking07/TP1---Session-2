@@ -78,9 +78,13 @@ public class RushHour {
      */
     private static Challenge loadNextChallenge() {
 
-        nextChallenge++;
 
-    return Challenge.loadChallenge(nextChallenge - 1);
+       Settings.ChallengeCount++;
+
+       nextChallenge = Settings.ChallengeCount;
+
+        return Challenge.loadChallenge(nextChallenge);
+
 
         // INSÉREZ VOTRE CODE ICI
     }

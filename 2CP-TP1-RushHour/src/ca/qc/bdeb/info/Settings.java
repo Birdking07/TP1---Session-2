@@ -21,7 +21,8 @@ class Settings {
     public static final Character PROMPT_SYMBOL = '?';
     public static final Character BORDER_SYMBOL = '▓';
     public static final Character EMPTY_SYMBOL = ' ';
-    public static final Character RED_SYMBOL = 'R';
+
+     static int ChallengeCount = 0;
 
     public static final int PARKING_SIZE = 8;  // bordure + 6 espaces + bordure
     public static final int NB_CHALLENGES = 3;
