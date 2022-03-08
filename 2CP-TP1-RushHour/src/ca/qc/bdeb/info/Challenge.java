@@ -49,13 +49,6 @@ public class Challenge {
     private void buildParking() {
 
 
-        for(int i = 0 ; i < FileSize ; i++){ // On recherche toutes les véhicules dans le défi courant
-            char symbol = VehicleColour.get(i).charAt(0);
-            Vehicle vehicle = getVehicle(symbol);
-            vehicles.add(vehicle);
-        }
-
-
 
         for (int i = 0 ; i < FileSize ; i++){ //construction de la grille preParking que l'on va envoyer un par un dans Cell
 
@@ -116,6 +109,8 @@ public class Challenge {
 
         String carSymbol = symbol.toString(); //pour utiliser .equalsIgnoreCase()
 
+        // Trouve la couleur du véhicule recherché
+
         for(String ignored : VehicleColour){
             if(carSymbol.equalsIgnoreCase(VehicleColour.get(CurrentCar))){
 
@@ -124,9 +119,9 @@ public class Challenge {
             CurrentCar++;
         }
 
-            int VehicleSizeNumber = Integer.parseInt(VehicleSize.get(FinalCar));
-            Coordinate LoadCoordinate = new Coordinate(FinalCar);
-            Orientation CarOrientation = LoadCoordinate.CarOrientation;
+            int VehicleSizeNumber = Integer.parseInt(VehicleSize.get(FinalCar)); //Taille du véhicule
+            Coordinate LoadCoordinate = new Coordinate(FinalCar); //Recherche du position de véhicule
+            Orientation CarOrientation = LoadCoordinate.CarOrientation; //Recherche de l'orientation du véhicule
 
             return new Vehicle(symbol , VehicleSizeNumber ,LoadCoordinate , CarOrientation );
 
@@ -140,6 +135,8 @@ public class Challenge {
      */
     public boolean isSolved(){
 
+        //si la sortie du stationnement est représenté par un espace suivi du symbole R on montre les données et
+        // on retourne true.
         if (preParking[3][7].equals(" R")){
             System.out.println("Nombre de déplacements: " + moveCount);
             System.out.print("Vos déplacements : ");
@@ -163,11 +160,18 @@ public class Challenge {
      */
     private boolean load() {
 
+        // On supprime les données des défis précédentes pour éviter une répétition.
         VehicleSize.clear();
         VehicleCoordinates.clear();
         VehicleOrientation.clear();
         VehicleColour.clear();
 
+        /*
+        Lecture du fichier
+
+        On convertit le numéro du défi en String et on utilise cela pour trouver le fichier dans laquelle chercher
+        les données.
+         */
         try {
             String CurrentFile = Integer.toString(number);
             CurrentFile += ".txt";
@@ -175,13 +179,20 @@ public class Challenge {
             Scanner ReadFile = new Scanner(currentGame);
 
             ArrayList<String> fileText = new ArrayList<>();
+            // On ajoute chaque ligne du fichier dans un arraylist
             while (ReadFile.hasNextLine()) {
                 fileText.add(ReadFile.nextLine());
             }
             FileSize = fileText.size();
 
+            //dataTable est notre table 2D de données qui a la taille verticale du fichier et horizontale des données cherchés
             String[][] dataTable = new String[FileSize][4];
 
+            /*
+            On cherche les différentes valeurs de chaque ligne dans le fichier.
+            Les données séparées dans chaque ligne de fileText sera ensuite copié automatiquement vers une rangée de
+            dataTable (chaque rangé va alors représenté les valeurs d'un véhicule).
+             */
             for (int i = 0 ; i < FileSize; i++){
                 String[] SplitValues = fileText.get(i).split("\\|");
 
@@ -197,18 +208,20 @@ public class Challenge {
 
             }
 
+            //sauvegarde des positions des bordures de la première rangée.
 
             for(int i = 0 ; i < Settings.PARKING_SIZE ; i++){
 
                 preParking[0][i] = " " + Settings.BORDER_SYMBOL;
             }
 
+            //sauvegarde des positions des bordures dans la première et dernière colonne.
             for (int i = 1 ; i < Settings.PARKING_SIZE ; i++){
                 preParking[i][0] = " " + Settings.BORDER_SYMBOL;
                 preParking[i][7] = " " + Settings.BORDER_SYMBOL;
             }
 
-
+            //remplissage du reste du cell avec un string de deux caractères.
             for(int i = 1 ; i < 7 ; i++){
                 for(int a = 1 ; a < 7 ; a++){
 
@@ -218,12 +231,22 @@ public class Challenge {
                 }
             }
 
+            //sauvegarde des positions des bordures de la dernière rangée.
             for(int i = 0 ; i < Settings.PARKING_SIZE ; i++){
 
                 preParking[7][i] = " " +  Settings.BORDER_SYMBOL;
             }
 
+            //construction de la sortie
             preParking[3][7] = "  ";
+
+            // On recherche toutes les véhicules dans le défi courant
+            for(int i = 0 ; i < FileSize ; i++){
+                char symbol = VehicleColour.get(i).charAt(0);
+                Vehicle vehicle = getVehicle(symbol);
+                vehicles.add(vehicle);
+            }
+
 
 
             buildParking();
@@ -261,30 +284,32 @@ public class Challenge {
      */
     public MoveResult moveVehicle(Command command) {
 
-
+        //choices = choix du véhicule ainsi que la direction désirée.
         char[] choices = command.getChoices();
         if (choices == null){
             return MoveResult.Invalid;
         }
 
+
         moveCount++;
         moveKeeper.add("" + choices[0] + choices[1]);
 
+        //véhicule choisi transformé en Majuscule a fin d'éviter des erreurs dans la caisse des lettres.
         char symbol = String.valueOf(choices[0]).toUpperCase().charAt(0);
-      
+
+        //currentCar est la position dans vehicles dans laquelle on retrouve le véhicule cherché dans la commande.
         int currentCar = 0;
-        
        for (int i = 0 ; i < FileSize ; i++){
            if (vehicles.get(i).getSymbol() == symbol){
                currentCar = i;
            }
        }
 
-
+        //la direction choisie dans laquelle le véhicule va essayer de se déplacer
        char movement = String.valueOf(choices[1]).toUpperCase().charAt(0);
 
-        int preMoveH = Integer.parseInt(vehicles.get(currentCar).getPosition().HorizontalCoordinates);
-        int preMoveV = Integer.parseInt(vehicles.get(currentCar).getPosition().VerticalCoordinates);
+        int positionH = Integer.parseInt(vehicles.get(currentCar).getPosition().HorizontalCoordinates);
+        int positionV = Integer.parseInt(vehicles.get(currentCar).getPosition().VerticalCoordinates);
 
         int vehicleLength = Integer.parseInt(VehicleSize.get(currentCar));
 
@@ -294,12 +319,12 @@ public class Challenge {
 
                case 'E' -> {
 
-                   if (preParking[preMoveV][preMoveH + (vehicleLength)].charAt(1) == Settings.BORDER_SYMBOL){
+                   if (preParking[positionV][positionH + (vehicleLength)].charAt(1) == Settings.BORDER_SYMBOL){
                        return MoveResult.Border;
-                   } else if (preParking[preMoveV][preMoveH + (vehicleLength)].charAt(1) != ' '){
+                   } else if (preParking[positionV][positionH + (vehicleLength)].charAt(1) != ' '){
                        return MoveResult.Vehicle;
                    } else {
-                       preParking[preMoveV][preMoveH] = "  ";
+                       preParking[positionV][positionH] = "  ";
                        vehicles.get(currentCar).move(1 , 0);
                    }
 
@@ -308,12 +333,12 @@ public class Challenge {
                case 'W' -> {
 
 
-                   if (preParking[preMoveV][preMoveH - 1].charAt(1) == Settings.BORDER_SYMBOL){
+                   if (preParking[positionV][positionH - 1].charAt(1) == Settings.BORDER_SYMBOL){
                        return MoveResult.Border;
-                   } else if (preParking[preMoveV][preMoveH - 1].charAt(1) != ' ') {
+                   } else if (preParking[positionV][positionH - 1].charAt(1) != ' ') {
                        return MoveResult.Vehicle;
                    } else {
-                       preParking[preMoveV][preMoveH + vehicleLength - 1] = "  ";
+                       preParking[positionV][positionH + vehicleLength - 1] = "  ";
                        vehicles.get(currentCar).move(-1 , 0);
                    }
 
@@ -329,12 +354,12 @@ public class Challenge {
 
                case 'N' -> {
 
-                   if(preParking[preMoveV - 1][preMoveH].charAt(1) == Settings.BORDER_SYMBOL){
+                   if(preParking[positionV - 1][positionH].charAt(1) == Settings.BORDER_SYMBOL){
                        return MoveResult.Border;
-                   } else if (preParking[preMoveV - 1][preMoveH].charAt(1) != ' '){
+                   } else if (preParking[positionV - 1][positionH].charAt(1) != ' '){
                        return MoveResult.Vehicle;
                    } else {
-                       preParking[preMoveV + vehicleLength - 1][preMoveH] = "  ";
+                       preParking[positionV + vehicleLength - 1][positionH] = "  ";
                        vehicles.get(currentCar).move(0 , -1);
                    }
 
@@ -342,12 +367,12 @@ public class Challenge {
 
                case 'S' -> {
 
-                   if(preParking[preMoveV + vehicleLength][preMoveH].charAt(1) == Settings.BORDER_SYMBOL){
+                   if(preParking[positionV + vehicleLength][positionH].charAt(1) == Settings.BORDER_SYMBOL){
                        return MoveResult.Border;
-                   } else if (preParking[preMoveV + vehicleLength][preMoveH].charAt(1) != ' '){
+                   } else if (preParking[positionV + vehicleLength][positionH].charAt(1) != ' '){
                        return MoveResult.Vehicle;
                    } else {
-                       preParking[preMoveV][preMoveH] = "  ";
+                       preParking[positionV][positionH] = "  ";
                        vehicles.get(currentCar).move(0 , 1);
                    }
 
@@ -386,7 +411,7 @@ public class Challenge {
         for (int i = 0 ; i < Settings.PARKING_SIZE ; i++){
             for (int a = 0 ; a < Settings.PARKING_SIZE ; a++){
 
-                parking[i][a] = new Cell(preParking[i][a].charAt(1) , a);
+                parking[i][a] = new Cell(preParking[i][a].charAt(1) ,i ,  a);
 
 
             }

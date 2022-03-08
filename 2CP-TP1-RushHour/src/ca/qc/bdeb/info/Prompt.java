@@ -1,7 +1,5 @@
 package ca.qc.bdeb.info;
 
-import java.util.Scanner;
-
 
 /**
  * Saisie des commandes utilisateurs.

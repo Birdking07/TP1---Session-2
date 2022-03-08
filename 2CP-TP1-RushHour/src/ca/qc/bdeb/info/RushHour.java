@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class RushHour {
 
-    private static int nextChallenge = 0;
+    private static int nextChallenge = 1;
 
     /**
      * Programme principal.
@@ -36,7 +36,7 @@ public class RushHour {
 
         // boucle de jeu
         while (true) {
-           challenge.print();
+            challenge.print();
             Command command = prompt.readUserCommand(challenge);
 
             boolean Quit = false;
@@ -63,7 +63,6 @@ public class RushHour {
 
                     break;
                 }
-
                 challenge = loadNextChallenge();
             }
         }
@@ -78,12 +77,9 @@ public class RushHour {
      */
     private static Challenge loadNextChallenge() {
 
-
         nextChallenge++;
 
-
-
-        return Challenge.loadChallenge(nextChallenge);
+        return Challenge.loadChallenge(nextChallenge - 1);
 
 
         // INSÉREZ VOTRE CODE ICI
