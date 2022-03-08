@@ -1,12 +1,9 @@
 package ca.qc.bdeb.info;
 
-import java.util.ArrayList;
-
 public class Coordinate {
 
      public String HorizontalCoordinates;
      public String VerticalCoordinates;
-     public ArrayList<String> MergedCoordinates = new ArrayList<>();
      public Orientation CarOrientation;
 
     public Coordinate(int CarCounter){
@@ -25,7 +22,6 @@ public class Coordinate {
             HorizontalCoordinates = CurrentCoordinates[0];
             VerticalCoordinates = CurrentCoordinates[1];
 
-            MergedCoordinates.add(HorizontalCoordinates + " " + VerticalCoordinates );
     }
 
 

@@ -20,17 +20,17 @@ public class Challenge {
     private final ArrayList<Vehicle> vehicles = new ArrayList<>();  // liste des véhicules dans le stationnement
 
     private final String[][] preParking = new String[Settings.PARKING_SIZE][Settings.PARKING_SIZE]; // garde les valeurs de la grille
-    private final Cell[][] parking = new Cell[Settings.PARKING_SIZE][Settings.PARKING_SIZE];
+    private final Cell[][] parking = new Cell[Settings.PARKING_SIZE][Settings.PARKING_SIZE]; // table 2D de cells à être construit
     private final int number;  // numéro du défi
-    private int moveCount = 0;
+    private int moveCount = 0; //va augmenter de 1 pour chaque mouvement fait.
 
-    static ArrayList<String> VehicleColour = new ArrayList<>();
-    static ArrayList<String> VehicleSize = new ArrayList<>();
-    static ArrayList<String> VehicleCoordinates = new ArrayList<>();
-    static ArrayList<String> VehicleOrientation = new ArrayList<>();
-    static int FileSize;
+    static ArrayList<String> VehicleColour = new ArrayList<>(); //enregistre le symbole de la véhicule
+    static ArrayList<String> VehicleSize = new ArrayList<>(); //enregistre la taille de la véhicule
+    static ArrayList<String> VehicleCoordinates = new ArrayList<>(); // enregistre la position initiale du véhicule
+    static ArrayList<String> VehicleOrientation = new ArrayList<>(); // enregistre l'orientation du véhicule
+    static int FileSize; // la taille du fichier souvent utilisé pour savoir le nombre de véhicules
 
-    private ArrayList<String> moveKeeper = new ArrayList<>();
+    private final ArrayList<String> moveKeeper = new ArrayList<>(); //sauvegarde chaque mouvement effectué
 
     /**
      * Construit un objet représentant un défi.
@@ -49,7 +49,7 @@ public class Challenge {
     private void buildParking() {
 
 
-        for(int i = 0 ; i < FileSize ; i++){
+        for(int i = 0 ; i < FileSize ; i++){ // On recherche toutes les véhicules dans le défi courant
             char symbol = VehicleColour.get(i).charAt(0);
             Vehicle vehicle = getVehicle(symbol);
             vehicles.add(vehicle);
@@ -57,20 +57,26 @@ public class Challenge {
 
 
 
-        for (int i = 0 ; i < FileSize ; i++){
+        for (int i = 0 ; i < FileSize ; i++){ //construction de la grille preParking que l'on va envoyer un par un dans Cell
 
 
-          char symbol =  vehicles.get(i).getSymbol();
+          char symbol =  vehicles.get(i).getSymbol(); //On identifie le véhicule
 
 
 
-           if(Settings.get().isValidSymbol(symbol)){
+           if(Settings.get().isValidSymbol(symbol)){ //vérifie si le véhicule apparait dans la liste des couleurs
+
+
+               //recherche des Coordonnées horizontale et vertical du véhicule
 
                int HorizontalCoords = Integer.parseInt(vehicles.get(i).getPosition().HorizontalCoordinates);
                int VerticalCoords = Integer.parseInt(vehicles.get(i).getPosition().VerticalCoordinates);
 
 
-
+               /*
+               Détermine l'orientation du véhicule et ensuite va imprimer le véhicule par rapport à sa taille.
+               Ce qui va être imprimé sera alors un espace suivi par le symbole du véhicule.
+                */
 
                 switch (vehicles.get(i).getOrientation()) {
 
@@ -105,9 +111,10 @@ public class Challenge {
      */
     public Vehicle getVehicle(Character symbol) {
 
-        int FinalCar = 0;
-        int CurrentCar = 0;
-        String carSymbol = symbol.toString();
+        int FinalCar = 0; //le véhicule qui va être envoyé lorsque le symbol correspondante est trouvé.
+        int CurrentCar = 0; // va incrémenter avec chaque répétition du for each pour rechercher la couleur correspondante
+
+        String carSymbol = symbol.toString(); //pour utiliser .equalsIgnoreCase()
 
         for(String ignored : VehicleColour){
             if(carSymbol.equalsIgnoreCase(VehicleColour.get(CurrentCar))){
@@ -254,10 +261,15 @@ public class Challenge {
      */
     public MoveResult moveVehicle(Command command) {
 
-        moveCount++;
 
         char[] choices = command.getChoices();
+        if (choices == null){
+            return MoveResult.Invalid;
+        }
+
+        moveCount++;
         moveKeeper.add("" + choices[0] + choices[1]);
+
         char symbol = String.valueOf(choices[0]).toUpperCase().charAt(0);
       
         int currentCar = 0;

@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class RushHour {
 
-    private static int nextChallenge = 1;
+    private static int nextChallenge = 0;
 
     /**
      * Programme principal.
@@ -79,9 +79,9 @@ public class RushHour {
     private static Challenge loadNextChallenge() {
 
 
-       Settings.ChallengeCount++;
+        nextChallenge++;
 
-       nextChallenge = Settings.ChallengeCount;
+
 
         return Challenge.loadChallenge(nextChallenge);
 

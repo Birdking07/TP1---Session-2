@@ -16,7 +16,7 @@ public class Command {
 
         if (!(user.equalsIgnoreCase("q"))){
            choices = user.toCharArray();
-           if (choices.length == 2){
+               if (choices.length == 2){
 
                    boolean valid = false;
 
@@ -47,9 +47,10 @@ public class Command {
                        choices = null;
                    }
 
-           } else {
-               System.out.println("Taille de commande invalide");
-           }
+               } else {
+                   choices = null;
+               }
+
 
 
 
