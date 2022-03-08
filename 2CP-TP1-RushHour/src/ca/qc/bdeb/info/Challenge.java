@@ -22,12 +22,15 @@ public class Challenge {
     private final String[][] preParking = new String[Settings.PARKING_SIZE][Settings.PARKING_SIZE]; // garde les valeurs de la grille
     private final Cell[][] parking = new Cell[Settings.PARKING_SIZE][Settings.PARKING_SIZE];
     private final int number;  // numéro du défi
+    private int moveCount = 0;
 
     static ArrayList<String> VehicleColour = new ArrayList<>();
     static ArrayList<String> VehicleSize = new ArrayList<>();
     static ArrayList<String> VehicleCoordinates = new ArrayList<>();
     static ArrayList<String> VehicleOrientation = new ArrayList<>();
     static int FileSize;
+
+    private ArrayList<String> moveKeeper = new ArrayList<>();
 
     /**
      * Construit un objet représentant un défi.
@@ -130,9 +133,19 @@ public class Challenge {
      */
     public boolean isSolved(){
 
+        if (preParking[3][7].equals(" R")){
+            System.out.println("Nombre de déplacements: " + moveCount);
+            System.out.print("Vos déplacements : ");
+            for (String s : moveKeeper) {
+                System.out.print(" " + s);
+            }
+            System.out.print("\n");
 
-        return preParking[3][7].equals(" R");
 
+            return true;
+        }
+
+     return false;
         // INSÉREZ VOTRE CODE ICI
     }
 
@@ -241,7 +254,10 @@ public class Challenge {
      */
     public MoveResult moveVehicle(Command command) {
 
+        moveCount++;
+
         char[] choices = command.getChoices();
+        moveKeeper.add("" + choices[0] + choices[1]);
         char symbol = String.valueOf(choices[0]).toUpperCase().charAt(0);
       
         int currentCar = 0;
@@ -278,13 +294,14 @@ public class Challenge {
                }
 
                case 'W' -> {
-                   preParking[preMoveV][preMoveH + vehicleLength - 1] = "  ";
+
 
                    if (preParking[preMoveV][preMoveH - 1].charAt(1) == Settings.BORDER_SYMBOL){
                        return MoveResult.Border;
                    } else if (preParking[preMoveV][preMoveH - 1].charAt(1) != ' ') {
                        return MoveResult.Vehicle;
                    } else {
+                       preParking[preMoveV][preMoveH + vehicleLength - 1] = "  ";
                        vehicles.get(currentCar).move(-1 , 0);
                    }
 
@@ -330,11 +347,6 @@ public class Challenge {
            }
 
        }
-
-
-
-        int postMoveH = Integer.parseInt(vehicles.get(currentCar).getPosition().HorizontalCoordinates);
-        int postMoveV = Integer.parseInt(vehicles.get(currentCar).getPosition().HorizontalCoordinates);
 
        if (preParking[3][6].equals(" R")){
            buildParking();
