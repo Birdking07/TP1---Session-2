@@ -42,8 +42,9 @@ public class Vehicle {
      */
     public ArrayList<Coordinate> getCoordinates() {
 
-        ArrayList<Coordinate> CurrentCarCoordinates = new ArrayList<>();
+        //inutile? on peut juste utiliser vehicle.getPosition ?
 
+        ArrayList<Coordinate> CurrentCarCoordinates = new ArrayList<>();
        for (int i = 0 ; i < Challenge.FileSize ; i++){
             position = new Coordinate(i);
            CurrentCarCoordinates.add(position);
@@ -61,23 +62,25 @@ public class Vehicle {
      */
     public void move(int deltaX, int deltaY) {
 
-        int TrueHorizontal = Integer.parseInt(position.HorizontalCoordinates);
-        int TrueVertical = Integer.parseInt(position.VerticalCoordinates);
+        // les deux coordonnées actuelles du véhicule
+        int newHorizontal = Integer.parseInt(position.HorizontalCoordinates);
+        int newVertical = Integer.parseInt(position.VerticalCoordinates);
 
-       if (deltaX == 1){
-           TrueHorizontal += 1;
-           position.HorizontalCoordinates = String.valueOf(TrueHorizontal);
-       } else if (deltaX == -1){
-           TrueHorizontal -= 1;
-           position.HorizontalCoordinates = String.valueOf(TrueHorizontal);
+
+       if (deltaX == 1){ //déplacement vers l'est
+           newHorizontal += 1;
+           position.HorizontalCoordinates = String.valueOf(newHorizontal);
+       } else if (deltaX == -1){ //déplacement vers l'ouest
+           newHorizontal -= 1;
+           position.HorizontalCoordinates = String.valueOf(newHorizontal);
        }
 
-        if (deltaY == 1){
-            TrueVertical += 1;
-            position.VerticalCoordinates = String.valueOf(TrueVertical);
-        } else if (deltaY == -1){
-            TrueVertical -= 1;
-            position.VerticalCoordinates = String.valueOf(TrueVertical);
+        if (deltaY == 1){ //déplacement vers le sud
+            newVertical += 1;
+            position.VerticalCoordinates = String.valueOf(newVertical);
+        } else if (deltaY == -1){ //déplacement vers le nord
+            newVertical -= 1;
+            position.VerticalCoordinates = String.valueOf(newVertical);
         }
 
         // INSÉREZ VOTRE CODE ICI

@@ -308,22 +308,26 @@ public class Challenge {
         //la direction choisie dans laquelle le véhicule va essayer de se déplacer
        char movement = String.valueOf(choices[1]).toUpperCase().charAt(0);
 
+       //position de le véhicule courante (Horizontale et Vertical)
         int positionH = Integer.parseInt(vehicles.get(currentCar).getPosition().HorizontalCoordinates);
         int positionV = Integer.parseInt(vehicles.get(currentCar).getPosition().VerticalCoordinates);
 
+        //Longeur du véhicule
         int vehicleLength = Integer.parseInt(VehicleSize.get(currentCar));
 
-
+        //Ex : Si l'utilisateur choisi un véhicule have une orientation Horizontale et veut se déplacer verticalement
+        // le changement ne passera pas
        if (vehicles.get(currentCar).getOrientation() == Orientation.Horizontal){
            switch (movement){
 
                case 'E' -> {
-
+                   //on regarde ce qui se trouve devant le véhicule lors du déplacement pour déterminer le résultat
                    if (preParking[positionV][positionH + (vehicleLength)].charAt(1) == Settings.BORDER_SYMBOL){
                        return MoveResult.Border;
                    } else if (preParking[positionV][positionH + (vehicleLength)].charAt(1) != ' '){
                        return MoveResult.Vehicle;
                    } else {
+                       //Si tout fonctionne on efface le symbole du véhicule dans la case précédente et l'on bouge le véhicule
                        preParking[positionV][positionH] = "  ";
                        vehicles.get(currentCar).move(1 , 0);
                    }
@@ -332,12 +336,13 @@ public class Challenge {
 
                case 'W' -> {
 
-
+                   //on regarde ce qui se trouve devant le véhicule lors du déplacement pour déterminer le résultat
                    if (preParking[positionV][positionH - 1].charAt(1) == Settings.BORDER_SYMBOL){
                        return MoveResult.Border;
                    } else if (preParking[positionV][positionH - 1].charAt(1) != ' ') {
                        return MoveResult.Vehicle;
                    } else {
+                       //Si tout fonctionne on efface le symbole du véhicule dans la case précédente et l'on bouge le véhicule
                        preParking[positionV][positionH + vehicleLength - 1] = "  ";
                        vehicles.get(currentCar).move(-1 , 0);
                    }
@@ -353,12 +358,13 @@ public class Challenge {
            switch (movement){
 
                case 'N' -> {
-
+                   //on regarde ce qui se trouve devant le véhicule lors du déplacement pour déterminer le résultat
                    if(preParking[positionV - 1][positionH].charAt(1) == Settings.BORDER_SYMBOL){
                        return MoveResult.Border;
                    } else if (preParking[positionV - 1][positionH].charAt(1) != ' '){
                        return MoveResult.Vehicle;
                    } else {
+                       //Si tout fonctionne on efface le symbole du véhicule dans la case précédente et l'on bouge le véhicule
                        preParking[positionV + vehicleLength - 1][positionH] = "  ";
                        vehicles.get(currentCar).move(0 , -1);
                    }
@@ -366,12 +372,13 @@ public class Challenge {
                }
 
                case 'S' -> {
-
+                   //on regarde ce qui se trouve devant le véhicule lors du déplacement pour déterminer le résultat
                    if(preParking[positionV + vehicleLength][positionH].charAt(1) == Settings.BORDER_SYMBOL){
                        return MoveResult.Border;
                    } else if (preParking[positionV + vehicleLength][positionH].charAt(1) != ' '){
                        return MoveResult.Vehicle;
                    } else {
+                       //Si tout fonctionne on efface le symbole du véhicule dans la case précédente et l'on bouge le véhicule
                        preParking[positionV][positionH] = "  ";
                        vehicles.get(currentCar).move(0 , 1);
                    }
@@ -385,6 +392,7 @@ public class Challenge {
 
        }
 
+        //avant de conclure si le MoveResult s'agit de success on vérifie si le véhicule avec le symbole R est dans la sortie
        if (preParking[3][6].equals(" R")){
            buildParking();
            return MoveResult.Solved;
@@ -393,7 +401,7 @@ public class Challenge {
 
 
 
-
+        //On affiche la nouvelle grille avec les changements effectués
        buildParking();
        return MoveResult.Success;
 
@@ -405,9 +413,10 @@ public class Challenge {
      */
     public void print() {
 
-
+        //l'affichage du titre
         System.out.println(Colour.RED +" R U S H" + Colour.YELLOW + " H @ U R" + Colour.IRON);
 
+        //appel de toutes les classes Cell qui composent la grille.
         for (int i = 0 ; i < Settings.PARKING_SIZE ; i++){
             for (int a = 0 ; a < Settings.PARKING_SIZE ; a++){
 

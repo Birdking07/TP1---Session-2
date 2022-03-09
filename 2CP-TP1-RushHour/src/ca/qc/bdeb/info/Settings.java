@@ -22,8 +22,6 @@ class Settings {
     public static final Character BORDER_SYMBOL = '▓';
     public static final Character EMPTY_SYMBOL = ' ';
 
-     static int ChallengeCount = 0;
-
     public static final int PARKING_SIZE = 8;  // bordure + 6 espaces + bordure
     public static final int NB_CHALLENGES = 3;
 
@@ -76,7 +74,7 @@ class Settings {
      */
     public Colour getColour(Character symbol) {
 
-
+        //va être utilisé pour trouver la couleur des véhicules
         int CorrectPosition = 0;
         for (int i = 0 ; i < Colour.values().length ; i++){
             if (symbol == Colour.values()[i].name().charAt(0)){
@@ -94,8 +92,9 @@ class Settings {
      * @return true si le symbole est valide, false sinon
      */
     public boolean isValidSymbol(Character symbol) {
-        int AttemptCounter = 0;
 
+        //va vérifier si le symbole du véhicule est une des couleurs
+        int AttemptCounter = 0;
         for(int i = 0 ; i < Colour.values().length ; i++){
             if(symbol != Colour.values()[i].name().charAt(0)){
                 AttemptCounter++;

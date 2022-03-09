@@ -77,6 +77,9 @@ public class RushHour {
      */
     private static Challenge loadNextChallenge() {
 
+        //on incrémente nextChallenge et on va le retourner en le diminuant de 1 pour avoir la même taille que les fichiers
+        //mais en même temps ayant la grandeur nécessaire pour qu'il soit supérieur à NB_challenges après le fichier 3.txt
+
         nextChallenge++;
 
         return Challenge.loadChallenge(nextChallenge - 1);
@@ -92,6 +95,8 @@ public class RushHour {
      * @param result le résultat de la commande
      */
     private static void playSFX(Audio sounds, MoveResult result) {
+
+        //On joue les différents fichiers mp3
 
        switch (result){
 

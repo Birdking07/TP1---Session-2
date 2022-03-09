@@ -25,6 +25,8 @@ public class Prompt {
      * @param challenge le défi présentement en cours (celui où récupérer les véhicules)
      * @return la commande saisie
      */
+
+    //affiche le prompt pour la commande et retourne une instance de la classe Commande
     public Command readUserCommand(Challenge challenge) {
 
         print();
